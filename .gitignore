@@ -1,0 +1,7 @@
+Symfony/vendor/
+Symfony/web/bundles/
+Symfony/app/bootstrap*
+Symfony/app/cache/*
+Symfony/app/logs/*
+Symfony/app/config/parameters.ini
+.idea/
