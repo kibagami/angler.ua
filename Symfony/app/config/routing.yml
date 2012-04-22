@@ -1,18 +1,14 @@
+AnglerFrontendBundle:
+    resource: "@AnglerFrontendBundle/Resources/config/routing.yml"
+    prefix:   /checkout
+
 AnglerCheckoutBundle:
     resource: "@AnglerCheckoutBundle/Resources/config/routing.yml"
     prefix:   /
 
 AnglerBackendBundle:
     resource: "@AnglerBackendBundle/Resources/config/routing.yml"
-    prefix:   /
-
-AnglerFrontendBundle:
-    resource: "@AnglerFrontendBundle/Resources/config/routing.yml"
-    prefix:   /
-
-AnglerCoreBundle:
-    resource: "@AnglerCoreBundle/Resources/config/routing.php"
-    prefix:   /
+    prefix:   /backend
 
 # Internal routing configuration to handle ESI
 #_internal:
