@@ -18,9 +18,9 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Angler\CoreBundle\AnglerCoreBundle(),
-            new Angler\FrontendBundle\AnglerFrontendBundle(),
             new Angler\BackendBundle\AnglerBackendBundle(),
             new Angler\CheckoutBundle\AnglerCheckoutBundle(),
+            new Angler\FrontendBundle\AnglerFrontendBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

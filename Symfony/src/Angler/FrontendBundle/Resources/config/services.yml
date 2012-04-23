@@ -1,0 +1,7 @@
+parameters:
+#    angler_frontend.example.class: Angler\FrontendBundle\Example
+
+services:
+#    angler_frontend.example:
+#        class: %angler_frontend.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
