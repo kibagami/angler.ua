@@ -4,12 +4,11 @@ namespace Angler\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+class DefaultController extends Controller {
 
-class DefaultController extends Controller
-{
-    
-    public function indexAction()
-    {
-        return $this->render('AnglerBackendBundle:Default:index.html.php');
-    }
+	public function indexAction() {
+		$data = array();
+
+		return $this->render('AnglerBackendBundle:Default:index.html.php', $data);
+	}
 }
