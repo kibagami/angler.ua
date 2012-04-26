@@ -37,6 +37,93 @@
 
 <div class="b-page" id="page">
 	<div class="b-page-content">
+		<div class="b-grid-row">
+			<div class="b-grid-box b-header">
+
+				<div class="b-logo" id="logo">
+					<img src="images/logotype.png" alt="">
+				</div>
+
+				<div class="b-head-layout">
+
+					<div class="b-grid-cell cfx" id="toolbar">
+						<ul class="b-vlist b-fr cfx" id="settings">
+							<li class="b-vlist-item">
+								<div id="cart" class="b-tool-item b-tool-plate b-tile">
+									<div class="b-switcher">
+										<em>Cart: empty</em>
+									</div>
+								</div>
+							</li>
+							<li class="b-vlist-item">
+								<div class="b-tool-item b-tool-plate b-tile" id="currency">
+									<div class="b-switcher b-switcher_dropdown lang danish">
+										<i class="flag"></i>
+										<em>Danske Krone</em>
+									</div>
+								</div>
+							</li>
+							<li class="b-vlist-item last">
+								<div class="b-tool-item b-tool-plate b-tile" id="lang">
+									<div class="b-switcher b-switcher_dropdown lang danish">
+										<i class="flag"></i>
+										<em>Danish</em>
+									</div>
+									<div class="slide-pan" style="display: none">
+								<span class="slide-item lang ukraine">
+									<i class="flag"></i>
+									<em>����������</em>
+								</span>
+								<span class="slide-item lang danish">
+									<i class="flag"></i>
+									<em>Danish</em>
+								</span>
+								<span class="slide-item lang german">
+									<i class="flag"></i>
+									<em>German</em>
+								</span>
+								<span class="slide-item lang svenska">
+									<i class="flag"></i>
+									<em>Svenska</em>
+								</span>
+								<span class="slide-item lang norway">
+									<i class="flag"></i>
+									<em>Norway</em>
+								</span>
+								<span class="slide-item lang russian">
+									<i class="flag"></i>
+									<em>�������</em>
+								</span>
+									</div>
+								</div>
+							</li>
+						</ul>
+						<ul class="b-vlist b-fl cfx" id="userpanel">
+							<li class="b-vlist-item">
+								<a href="#auth?mode=login" class="b-tool-item b-tile_login b-auth-link" id="login">
+									<span>Log In</span>
+								</a>
+							</li>
+							<li class="b-vlist-item">
+								<div class="b-tool-label">
+									<span>or</span>
+								</div>
+							</li>
+							<li class="b-vlist-item">
+								<a href="#auth?mode=register" class="b-tool-item b-tile_registration b-auth-link" id="registration">
+									<span>Register</span>
+								</a>
+							</li>
+						</ul>
+						<b class="clear"></b>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<!-- /Toolbar -->
+
 		<? $view['slots']->output('_content') ?>
 	</div>
 </div>

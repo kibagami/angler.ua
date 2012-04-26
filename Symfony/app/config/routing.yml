@@ -1,10 +1,10 @@
 AnglerFrontendBundle:
     resource: "@AnglerFrontendBundle/Resources/config/routing.yml"
-    prefix:   /checkout
+    prefix:   /
 
 AnglerCheckoutBundle:
     resource: "@AnglerCheckoutBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /checkout
 
 AnglerBackendBundle:
     resource: "@AnglerBackendBundle/Resources/config/routing.yml"
