@@ -3,9 +3,6 @@
 /** @var $asseticHelper \Symfony\Bundle\AsseticBundle\Templating\AsseticHelper */
 /** @var $assetsHelper \Symfony\Component\Templating\Helper\AssetsHelper */
 
-$asseticHelper = $view['assetic'];
-$assetsHelper = $view['assets'];
-
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -13,7 +10,7 @@ $assetsHelper = $view['assets'];
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 	<!-- Include stylesheets -->
-	<? foreach ($asseticHelper->stylesheets(
+	<? foreach ($view['assetic']->stylesheets(
 		array('@AnglerCoreBundle/Resources/public/css/*')
 ) as $url
 	): ?>
@@ -48,7 +45,7 @@ $assetsHelper = $view['assets'];
 			<div class="b-grid-box b-header">
 
 				<div class="b-logo" id="logo">
-					<img src="<?= $assetsHelper->getUrl('bundles/anglerbackend/images/logotype.png')?>" alt="">
+					<img src="<?= $view['assets']->getUrl('bundles/anglerbackend/images/logotype.png')?>" alt="">
 				</div>
 
 				<div class="b-head-layout">
