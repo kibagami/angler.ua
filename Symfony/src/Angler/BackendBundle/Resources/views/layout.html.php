@@ -14,7 +14,7 @@ $assetsHelper = $view['assets'];
 
 	<!-- Include stylesheets -->
 	<? foreach ($asseticHelper->stylesheets(
-		array('@AnglerBackendBundle/Resources/public/css/*')
+		array('@AnglerCoreBundle/Resources/public/css/*')
 ) as $url
 	): ?>
 	<link rel="stylesheet" href="<?= $view->escape($url) ?>" />

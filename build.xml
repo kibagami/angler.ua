@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="openbizbox" basedir="." default="help">
+
+	<property name="project.root" value="${project.basedir}/Symfony"/>
+	<property name="project.config" value="${project.root}/app/config/parameters.ini"/>
+	<property name="build.logs" value="${project.basedir}/build/logs"/>
+	<property name="build.logs.test" value="${build.logs}/test"/>
+	<!--<property name="build.logs.test.spec" value="${build.logs.test}/spec"/>-->
+	<!--<property name="build.logs.test.acceptance" value="${build.logs.test}/acceptance"/>-->
+
+	<!-- Permissions setup -->
+	<property name="executables" value="
+		code/symfony/app/console
+	"/>
+	<property name="writable-files" value="web/favicon.ico"/>
+	<property name="writable-dirs" value="
+		Symfony/app/logs, Symfony/app/cache,
+	"/>
+	<!-- end of permissions -->
+
+	<target name="help" description="Call any target below using &quot;phing &lt;target&gt;&quot;">
+		<exec command="phing -l" dir="${project.basedir}" passthru="true" />
+	</target>
+
+	<target name="install" depends="configure, cache-clear, assetic-dump" description="Fully prepare project after checkout">
+	</target>
+
+	<target name="configure" depends="set-permissions" description="Place a config file (if not yet)">
+		<echo msg="Creating needed symlinks for design/oscomerce"/>
+		<available file="${project.config}" property="config.exists" value="1"/>
+		<if>
+			<equals arg1="${config.exists}" arg2="1"/>
+			<then>
+				<echo msg="Skipping configuration wizard (found existing ${project.config})" />
+			</then>
+		</if>
+	</target>
+
+	<target name="set-permissions" description="Put correct permissions onto project directories/files">
+		<foreach list="${writable-dirs}" param="dirname" target="set-writable-dir" />
+		<foreach list="${writable-files}" param="filename" target="set-writable-file" />
+		<foreach list="${executables}" param="fileordir" target="set-executable" />
+
+	</target>
+
+	<target name="set-executable">
+		<if>
+			<equals arg1="${fileordir}" arg2="" />
+			<else>
+				<exec command="chmod -R +x ${fileordir}" />
+			</else>
+		</if>
+	</target>
+
+	<target name="set-writable-dir">
+		<exec command="dirname ${project.basedir}" outputProperty="service.basedir" />
+		<exec command="basename ${service.basedir}" outputProperty="service.login" />
+		<exec command="whoami" outputProperty="user.name" />
+		<if>
+			<equals arg1="${dirname}" arg2="" />
+			<else>
+				<mkdir dir="${dirname}" />
+				<if>
+					<equals arg1="${user.name}" arg2="root" />
+					<then>
+						<!-- This is to be performed on dev cluster and other GP Kolding servers -->
+						<exec command="chown ${service.login}-www:${service.login}-grp ${dirname} -R" />
+						<exec command="chmod -R ug+rw,o-rw,a-x ${dirname}" />
+						<exec command="chmod -R ug+X ${dirname}" />
+						<exec command="setfacl -R -m d:g::rwX,g::rwX ${dirname}" />
+					</then>
+					<else>
+						<!-- Kiev dev server -->
+						<exec command="chmod -R 777 ${dirname}" />
+					</else>
+				</if>
+			</else>
+		</if>
+	</target>
+
+	<target name="set-writable-file">
+		<exec command="dirname ${project.basedir}" outputProperty="service.basedir" />
+		<exec command="basename ${service.basedir}" outputProperty="service.login" />
+		<exec command="whoami" outputProperty="user.name" />
+		<if>
+			<equals arg1="${filename}" arg2="" />
+			<else>
+				<if>
+					<equals arg1="${user.name}" arg2="root" />
+					<then>
+						<!-- This is to be performed on dev cluster and other GP Kolding servers -->
+						<exec command="chown ${service.login}-www:${service.login}-grp ${filename}" />
+						<exec command="chmod ug+rw,o-rw ${filename}" />
+						<exec command="chmod ug+X ${filename}" />
+						<exec command="setfacl -m u::rw,g::rw ${filename}" />
+					</then>
+					<else>
+						<!-- Kiev dev server -->
+						<exec command="chmod ug+rw,o-rw,a-x ${filename}" />
+					</else>
+				</if>
+			</else>
+		</if>
+	</target>
+
+	<target name="cache-clear" description="Put correct permissions onto project directories/files">
+		<exec command="Symfony/app/console cache:clear --env=dev" dir="${project.basedir}" passthru="true" checkreturn="true" />
+		<exec command="Symfony/app/console cache:clear --env=prod --no-debug" dir="${project.basedir}" passthru="true" checkreturn="true" />
+		<exec command="chmod -R 777 Symfony/app/cache/" dir="${project.basedir}" />
+	</target>
+
+	<target name="assetic-dump" depends="cache-clear" description="Deploy assetic resources">
+		<exec command="Symfony/app/console assetic:dump --env=dev" dir="${project.basedir}" passthru="true" checkreturn="true" />
+		<exec command="Symfony/app/console assetic:dump --env=prod --no-debug" dir="${project.basedir}" passthru="true" checkreturn="true" />
+		<exec command="chmod -R 777 Symfony/app/cache/" dir="${project.basedir}" />
+	</target>
+</project>

@@ -1,0 +1,67 @@
+.b-grid-row {
+	padding: 0 10px;
+}
+
+.b-grid-box {
+	max-width: 1280px;
+	margin: 0 auto;	
+}
+
+.b-grid-box_rounded {
+	border-radius: 5px;
+}
+
+.b-grid-box_filled {
+	background: #011e30;
+}
+
+.b-grid-box_reducer {
+    padding: 0.5em;
+}
+.b-grid-box_reducer.small {
+    padding: 0.25em;
+}
+
+/* Layout */
+.b-grid-layout_off .b-grid-layout_wrapper,
+.b-grid-layout_off .b-grid-column_center {
+    margin-right: 0;
+}
+
+.b-grid-layout_off .b-grid-column_right {
+    display: none;
+}
+
+.b-grid-layout_wrapper {
+	margin-right: -230px;
+	position: relative;
+	float: left;
+	width: 100%;
+}
+.b-grid-column_center {
+	display: block;
+	margin-right: 240px;
+}
+		
+.b-grid-column_right {
+	float: right;
+	display: block;
+	width: 230px;
+	z-index: 10;
+	//min-height: 0px;
+}
+.b-tile {
+	background: #011e30;
+	color: #ccc;
+}
+
+.b-tile_login {
+	background: #73BF00;
+	color: #ccc;
+}
+
+.b-tile_registration {
+	background: #006ECC;
+	color: #ccc;
+}
+/* End of layout */

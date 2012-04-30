@@ -1,0 +1,20 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font: 100% verdana, arial, helvetica, sans-serif;
+}
+
+a, img {
+	border: none;
+}
+
+a {
+	outline: none;
+}
+
+ul {
+	list-style-type: none;
+}
