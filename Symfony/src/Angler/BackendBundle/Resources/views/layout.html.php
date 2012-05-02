@@ -11,7 +11,8 @@
 
 	<!-- Include stylesheets -->
 	<? foreach ($view['assetic']->stylesheets(
-		array('@AnglerCoreBundle/Resources/public/css/*')
+		array('@AnglerCoreBundle/Resources/public/css/*'),
+		array('yui_css')
 ) as $url
 	): ?>
 	<link rel="stylesheet" href="<?= $view->escape($url) ?>" />
@@ -144,18 +145,19 @@
 <!-- Include stylesheets -->
 <? foreach ($view['assetic']->javascripts(
 	array(
-		'@AnglerCoreBundle/Resources/public/js/framework/jquery.js',
-		'@AnglerCoreBundle/Resources/public/js/framework/json2.js',
-		'@AnglerBackendBundle/Resources/public/js/hashchange.js',
+//		'@AnglerCoreBundle/Resources/public/js/framework/jquery.js',
+//		'@AnglerCoreBundle/Resources/public/js/framework/json2.js',
+//		'@AnglerBackendBundle/Resources/public/js/hashchange.js',
 		'@AnglerBackendBundle/Resources/public/js/location.js',
-		'@AnglerBackendBundle/Resources/public/js/interfaces/*',
+//		'@AnglerBackendBundle/Resources/public/js/interfaces/*',
 		'@AnglerBackendBundle/Resources/public/js/page.js',
 		'@AnglerBackendBundle/Resources/public/js/ui.js',
 		'@AnglerBackendBundle/Resources/public/js/main.js',
 		'@AnglerBackendBundle/Resources/public/js/fader.js',
 		'@AnglerBackendBundle/Resources/public/js/modal.js',
 		'@AnglerBackendBundle/Resources/public/js/pages/*',
-	)
+	),
+	array('yui_js')
 ) as $url
 ): ?>
 <script type="text/javascript" src="<?= $view->escape($url) ?>"></script>
@@ -181,17 +183,17 @@
 <!--<script type="text/javascript" src="/js/fader.js?--><?//=$time ?><!--"></script>-->
 <!--<script type="text/javascript" src="/js/modal.js?--><?//=$time ?><!--"></script>-->
 <script type="text/javascript">
-	window.ui = new UI({ 'default_page' : 'landpage' });
-
-	ui.init();
-
-	$(window).bind('hashchange', function(){
-		if (!ui.hist.compare(location.hash)) {
-			ui.hist.set(location.hash);
-			ui.showPage(ui.hist.parse_hash());
-		}
-	});
-	ui.show();
+//	window.ui = new UI({ 'default_page' : 'landpage' });
+<!---->
+//	ui.init();
+<!---->
+//	$(window).bind('hashchange', function(){
+//		if (!ui.hist.compare(location.hash)) {
+//			ui.hist.set(location.hash);
+//			ui.showPage(ui.hist.parse_hash());
+//		}
+//	});
+//	ui.show();
 </script>
 </body>
 </html>
