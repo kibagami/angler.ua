@@ -9,9 +9,7 @@
 	<!--<property name="build.logs.test.acceptance" value="${build.logs.test}/acceptance"/>-->
 
 	<!-- Permissions setup -->
-	<property name="executables" value="
-		code/symfony/app/console
-	"/>
+	<property name="executables" value="Symfony/app/console,Symfony/bin/vendors"/>
 	<property name="writable-files" value="web/favicon.ico"/>
 	<property name="writable-dirs" value="
 		Symfony/app/logs, Symfony/app/cache,
@@ -22,7 +20,7 @@
 		<exec command="phing -l" dir="${project.basedir}" passthru="true" />
 	</target>
 
-	<target name="install" depends="configure, cache-clear, assetic-dump" description="Fully prepare project after checkout">
+	<target name="install" depends="configure, vendors-install, cache-clear, assetic-dump" description="Fully prepare project after checkout">
 	</target>
 
 	<target name="configure" depends="set-permissions" description="Place a config file (if not yet)">
@@ -101,6 +99,10 @@
 				</if>
 			</else>
 		</if>
+	</target>
+
+	<target name="vendors-install" description="Install vendors">
+		<exec command="Symfony/bin/vendors install" dir="${project.basedir}" passthru="true" checkreturn="true" />
 	</target>
 
 	<target name="cache-clear" description="Put correct permissions onto project directories/files">
