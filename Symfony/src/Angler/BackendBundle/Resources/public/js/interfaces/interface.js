@@ -1,37 +1,41 @@
-var Interface = function(name, methods){
-	if(arguments.length != 2) {
+function Interface(name, methods) {
+	if (arguments.length != 2) {
 		throw new Error("Interface constructor called with " + arguments.length + "arguments, but expected exactly 2.");
 	}
-	
-	this.name 		= name;
-	this.methods	= [];
-	
-	for(var i = 0, len = methods.length; i < len; i++) {
-		if(typeof methods[i] !== 'string') {
+
+	this.name = name;
+	this.methods = [];
+
+	for (var i = 0, len = methods.length; i < len; i++) {
+		if (typeof methods[i] !== 'string') {
 			throw new Error("Interface constructor expects method names to be passed in as a string.");
 		}
-		
+
 		this.methods.push(methods[i]);
 	}
-};
+}
 
-Interface.implements = function(object){
-	if(arguments.length < 2){
-		throw new Error("Function Interface.implements called with " + arguments.length + "arguments, but expected at least 2.");
+Interface.prototype.ensureImplements = function (object) {
+	var len = arguments.length;
+	if (len < 2) {
+		throw new Error("Function Interface.ensureImplements called with " + arguments.length + "arguments, but expected at least 2.");
 	}
-	for(var i = 1, len = arguments.length; i < len; i++){
-		var interface = arguments[i];
-		
-		if(interface.constructor !== Interface){
-			throw new Error("Function Interface.implements expects arguments two and above to be instances of Interface.");
+
+	for (var i = 1; i < len; i++) {
+		var paradigm = arguments[i];
+
+		if (Interface !== paradigm.constructor) {
+			throw new Error("Function Interface.ensureImplements expects arguments two and above to be instances of Interface.");
 		}
-	
-		for(var j = 0, methodsLen = interface.methods.length; j < methodsLen; j++){
-			var method = interface.methods[j];
-			
-			if(!object[method] || typeof object[method] !== 'function'){
-				throw new Error("Function Interface.implements: object does not implement the " + interface.name + " interface. Method " + method + " was not found.");
+		var methodsLen = paradigm.methods.length;
+		for (var j = 0; j < methodsLen; j++) {
+			var method = paradigm.methods[j];
+
+			if (!object[method] || typeof object[method] !== 'function') {
+				throw new Error("Function Interface.ensureImplements: object does not implement the " + paradigm.name + " interface. Method " + method + " was not found.");
 			}
 		}
 	}
 };
+
+var PageInterface = new Interface('PageInterface', ['init', 'load', 'show']);

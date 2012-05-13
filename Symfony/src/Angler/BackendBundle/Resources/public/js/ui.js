@@ -28,7 +28,7 @@ UI.prototype.init = function () {
 UI.prototype.show = function () {
 	this.visible = true;
 
-	this.showPage(this.hist.parse_hash());
+	this.showPage(this.hist.parseHash());
 };
 
 UI.prototype.getPage = function (name) {

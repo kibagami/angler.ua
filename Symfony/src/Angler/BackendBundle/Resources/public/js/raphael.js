@@ -1035,7 +1035,7 @@
         tear = function (el, paper) {
             el == paper.top && (paper.top = el.prev);
             el == paper.bottom && (paper.bottom = el.next);
-            el.next && (el.next.prev = el.prev);
+            el.next && (el.next.previous = el.prev);
             el.prev && (el.prev.next = el.next);
         },
         tofront = function (el, paper) {
@@ -1044,7 +1044,7 @@
             }
             tear(el, paper);
             el.next = null;
-            el.prev = paper.top;
+            el.previous = paper.top;
             paper.top.next = el;
             paper.top = el;
         },
@@ -1054,24 +1054,24 @@
             }
             tear(el, paper);
             el.next = paper.bottom;
-            el.prev = null;
-            paper.bottom.prev = el;
+            el.previous = null;
+            paper.bottom.previous = el;
             paper.bottom = el;
         },
         insertafter = function (el, el2, paper) {
             tear(el, paper);
             el2 == paper.top && (paper.top = el);
-            el2.next && (el2.next.prev = el);
+            el2.next && (el2.next.previous = el);
             el.next = el2.next;
-            el.prev = el2;
+            el.previous = el2;
             el2.next = el;
         },
         insertbefore = function (el, el2, paper) {
             tear(el, paper);
             el2 == paper.bottom && (paper.bottom = el);
             el2.prev && (el2.prev.next = el);
-            el.prev = el2.prev;
-            el2.prev = el;
+            el.previous = el2.prev;
+            el2.previous = el;
             el.next = el2;
         },
         removed = function (methodname) {
@@ -1500,7 +1500,7 @@
                 sy: 1
             };
             !svg.bottom && (svg.bottom = this);
-            this.prev = svg.top;
+            this.previous = svg.top;
             svg.top && (svg.top.next = this);
             svg.top = this;
             this.next = null;
@@ -2155,7 +2155,7 @@
                 sy: 1
             };
             !vml.bottom && (vml.bottom = this);
-            this.prev = vml.top;
+            this.previous = vml.top;
             vml.top && (vml.top.next = this);
             vml.top = this;
             this.next = null;

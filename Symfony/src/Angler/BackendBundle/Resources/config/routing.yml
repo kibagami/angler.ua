@@ -1,3 +1,8 @@
+AnglerBackendBundle_login:
+    pattern:  /login/
+    defaults: { _controller: AnglerBackendBundle:Default:login }
+
 AnglerBackendBundle_homepage:
     pattern:  /
     defaults: { _controller: AnglerBackendBundle:Default:index }
+

@@ -2,27 +2,56 @@
 /** @var $view \Symfony\Bundle\FrameworkBundle\Templating\PhpEngine */
 /** @var $asseticHelper \Symfony\Bundle\AsseticBundle\Templating\AsseticHelper */
 /** @var $assetsHelper \Symfony\Component\Templating\Helper\AssetsHelper */
-
 ?>
-<!DOCTYPE HTML>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<? $view->extend('AnglerCoreBundle::base.html.php') ?>
 
-	<!-- Include stylesheets -->
-	<? foreach ($view['assetic']->stylesheets(
-		array('@AnglerCoreBundle/Resources/public/css/*'),
-		array('yui_css')
+<? $view['slots']->start('stylesheets:base') ?>
+<? foreach ($view['assetic']->stylesheets(
+	array(
+		'@AnglerBackendBundle/Resources/public/css/grid.css',
+		'@AnglerBackendBundle/Resources/public/css/ui.css',
+	),
+	array('yui_css'),
+	array('output' => 'css/backend/styles.css')
+
 ) as $url
-	): ?>
-	<link rel="stylesheet" href="<?= $view->escape($url) ?>" />
-	<? endforeach ?>
-	<!-- /Include stylesheets -->
+): ?>
+<link rel="stylesheet" href="<?= $view->escape($url) ?>" />
+<? endforeach ?>
+<!-- Include custom stylesheets -->
+<? if($view['slots']->has('stylesheets:custom')): ?>
+<? $view['slots']->output('stylesheets:custom') ?>
+<!-- /Include custom stylesheets -->
+<? endif ?>
+<? $view['slots']->stop() ?>
 
-	<title><? $view['slots']->output('title', 'Default Title') ?></title>
+<!-- Include javascript files -->
+<? $view['slots']->start('javascripts:base') ?>
+<? foreach ($view['assetic']->javascripts(
+	array(
+		'@AnglerBackendBundle/Resources/public/js/location.js',
+		'@AnglerBackendBundle/Resources/public/js/interfaces/*',
+		'@AnglerBackendBundle/Resources/public/js/page.js',
+		'@AnglerBackendBundle/Resources/public/js/ui.js',
+		'@AnglerBackendBundle/Resources/public/js/main.js',
+		'@AnglerBackendBundle/Resources/public/js/fader.js',
+		'@AnglerBackendBundle/Resources/public/js/modal.js',
+	),
+	array('yui_js'),
+	array('output' => 'backend/js/main.js')
+) as $url
+): ?>
+<script type="text/javascript" src="<?= $view->escape($url) ?>"></script>
+<? endforeach ?>
+<!-- Include custom javascript files -->
+<? if($view['slots']->has('javascripts:custom')): ?>
+<? $view['slots']->output('javascripts:custom') ?>
+<? endif ?>
+<!-- /Include custom javascript files -->
+<? $view['slots']->stop() ?>
+<!-- /Include javascript files -->
 
-</head>
-<body>
+<? $view['slots']->start('body') ?>
 <!-- Fader -->
 <div class="hidden fader" id="fader">
 	<iframe></iframe>
@@ -140,60 +169,19 @@
 		</div>
 	</div>
 </div>
-
-
-<!-- Include stylesheets -->
-<? foreach ($view['assetic']->javascripts(
-	array(
-//		'@AnglerCoreBundle/Resources/public/js/framework/jquery.js',
-//		'@AnglerCoreBundle/Resources/public/js/framework/json2.js',
-//		'@AnglerBackendBundle/Resources/public/js/hashchange.js',
-		'@AnglerBackendBundle/Resources/public/js/location.js',
-//		'@AnglerBackendBundle/Resources/public/js/interfaces/*',
-		'@AnglerBackendBundle/Resources/public/js/page.js',
-		'@AnglerBackendBundle/Resources/public/js/ui.js',
-		'@AnglerBackendBundle/Resources/public/js/main.js',
-		'@AnglerBackendBundle/Resources/public/js/fader.js',
-		'@AnglerBackendBundle/Resources/public/js/modal.js',
-		'@AnglerBackendBundle/Resources/public/js/pages/*',
-	),
-	array('yui_js')
-) as $url
-): ?>
-<script type="text/javascript" src="<?= $view->escape($url) ?>"></script>
-<? endforeach ?>
-<!-- /Include stylesheets -->
-
-<!-- Include JS Framework -->
-<!--<script type="text/javascript" src="/js/framework/jquery.js"></script>-->
-<!--<script type="text/javascript" src="/js/interfaces/interface.js?--><?//=$time ?><!--"></script>-->
-<!-- /Include JS Framework -->
-<!--<script type="text/javascript" src="/js/hashchange.js?--><?//=$time ?><!--"></script>-->
-<!--<script type="text/javascript" src="/js/location.js?--><?//=$time ?><!--"></script>-->
-<!--<script type="text/javascript" src="/js/page.js?--><?//=$time ?><!--"></script>-->
-<!--<script type="text/javascript" src="/js/ui.js?--><?//=$time ?><!--"></script>-->
-<!--<script type="text/javascript" src="/js/main.js?--><?//=$time ?><!--"></script>-->
-<!--<script type="text/javascript" src="/js/pages/Auth.js?--><?//=$time ?><!--"></script>-->
-<!--<script type="text/javascript" src="/js/pages/Landpage.js?--><?//=$time ?><!--"></script>-->
-<!--<script type="text/javascript" src="/js/pages/Catalog.js?--><?//=$time ?><!--"></script>-->
-<!--<script type="text/javascript" src="/js/pages/Profile.js?--><?//=$time ?><!--"></script>-->
-<!--<script type="text/javascript" src="/js/pages/Articles.js?--><?//=$time ?><!--"></script>-->
-<!--<script type="text/javascript" src="/js/pages/Information.js?--><?//=$time ?><!--"></script>-->
-<!--<script type="text/javascript" src="/js/pages/Wishlist.js?--><?//=$time ?><!--"></script>-->
-<!--<script type="text/javascript" src="/js/fader.js?--><?//=$time ?><!--"></script>-->
-<!--<script type="text/javascript" src="/js/modal.js?--><?//=$time ?><!--"></script>-->
 <script type="text/javascript">
-//	window.ui = new UI({ 'default_page' : 'landpage' });
-<!---->
-//	ui.init();
-<!---->
-//	$(window).bind('hashchange', function(){
-//		if (!ui.hist.compare(location.hash)) {
-//			ui.hist.set(location.hash);
-//			ui.showPage(ui.hist.parse_hash());
-//		}
-//	});
-//	ui.show();
+		window.ui = new UI({ 'default_page' : 'landpage' });
+
+		ui.init();
+
+		$(window).bind('hashchange', function(){
+			if (!ui.hist.compare(location.hash)) {
+				ui.hist.set(location.hash);
+				ui.showPage(ui.hist.parseHash());
+			}
+		});
+		ui.show();
 </script>
-</body>
-</html>
+
+<? $view['slots']->stop() ?>
+
