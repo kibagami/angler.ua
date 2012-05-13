@@ -1,4 +1,4 @@
-Interface = function(opts){	
+Interface = function(opts){
 	if(typeof opts == 'undefined') opts = {};
 	
 	var obj = {
@@ -28,7 +28,7 @@ Interface = function(opts){
 	obj.show = function(){
 		obj.visible = true;
 		
-		obj.show_page(obj.hist.parse_hash());
+		obj.show_page(obj.hist.parseHash());
 	};
 	
 	obj.page_instance = function(name){
