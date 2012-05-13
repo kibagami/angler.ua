@@ -1,21 +1,21 @@
 <?php
 
-namespace Openbizbox\CoreBundle\Entity\Base;
+namespace Angler\StoreBundle\Entity\Base;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Openbizbox\CoreBundle\Model\OBBTranslatable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 use Gedmo\Tree\Node;
-use Openbizbox\CoreBundle as Core;
+use Angler\StoreBundle\Model\AnglerTranslatable;
+use Angler\StoreBundle\Interfaces\SEOKeywordsInterface;
 
 /** 
  * @ORM\MappedSuperclass 
- * @Gedmo\TranslationEntity(class="Openbizbox\CoreBundle\Entity\Translations\CategoryTranslation")
+ * @Gedmo\TranslationEntity(class="Angler\StoreBundle\Entity\Translations\CategoryTranslation")
  */
-abstract class Category extends OBBTranslatable implements Node, Core\SEOKeywordsInterface {
+abstract class Category extends AnglerTranslatable implements Node, SEOKeywordsInterface {
 
 	const PATH_SEPARATOR = '-';
 
@@ -192,34 +192,34 @@ abstract class Category extends OBBTranslatable implements Node, Core\SEOKeyword
 	protected $modifiedAt;
 
 	/**
-	 * @var \Openbizbox\CoreBundle\Entity\KeywordFocused[] | \Doctrine\Common\Collections\ArrayCollection  $keywordsFocused
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\KeywordFocused", mappedBy="category", cascade={"persist", "remove"}, orphanRemoval=true, indexBy="locale")
+	 * @var \Angler\StoreBundle\Entity\KeywordFocused[] | \Doctrine\Common\Collections\ArrayCollection  $keywordsFocused
+	 * @ORM\OneToMany(targetEntity="\Angler\StoreBundle\Entity\KeywordFocused", mappedBy="category", cascade={"persist", "remove"}, orphanRemoval=true, indexBy="locale")
 	 */
 	protected $keywordsFocused = null;
 
 	/**
-	 * @var \Openbizbox\CoreBundle\Entity\KeywordAdditional[] | \Doctrine\Common\Collections\ArrayCollection $keywordsAdditional
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\KeywordAdditional", mappedBy="category", cascade={"persist", "remove"}, orphanRemoval=true)
+	 * @var \Angler\StoreBundle\Entity\KeywordAdditional[] | \Doctrine\Common\Collections\ArrayCollection $keywordsAdditional
+	 * @ORM\OneToMany(targetEntity="\Angler\StoreBundle\Entity\KeywordAdditional", mappedBy="category", cascade={"persist", "remove"}, orphanRemoval=true)
 	 */
 	protected $keywordsAdditional;
 
 	/**
-	 * @var \Openbizbox\CoreBundle\Entity\PriceRule[] | \Doctrine\Common\Collections\ArrayCollection $priceRules
-	 * @ORM\ManyToMany(targetEntity="\Openbizbox\CoreBundle\Entity\PriceRule", mappedBy="categories")
+	 * @var \Angler\StoreBundle\Entity\PriceRule[] | \Doctrine\Common\Collections\ArrayCollection $priceRules
+	 * @ORM\ManyToMany(targetEntity="\Angler\StoreBundle\Entity\PriceRule", mappedBy="categories")
 	 */
 	protected $priceRules;
 
 	/**
-	 * @var \Openbizbox\CoreBundle\Entity\Category
+	 * @var \Angler\StoreBundle\Entity\Category
 	 * @gedmo\TreeParent
-	 * @ORM\ManyToOne(targetEntity="\Openbizbox\CoreBundle\Entity\Category", inversedBy="children", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="\Angler\StoreBundle\Entity\Category", inversedBy="children", cascade={"persist"})
 	 * @ORM\JoinColumn(name="parent_id", referencedColumnName="category_id", onDelete="CASCADE")
 	 */
 	protected $parent;
 
 	/**
-	 * @var \Openbizbox\CoreBundle\Entity\Category[]
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\Category", mappedBy="parent", cascade={"remove"})
+	 * @var \Angler\StoreBundle\Entity\Category[]
+	 * @ORM\OneToMany(targetEntity="\Angler\StoreBundle\Entity\Category", mappedBy="parent", cascade={"remove"})
 	 * @ORM\OrderBy({"left" = "ASC"})
 	 */
 	protected $children;
@@ -230,8 +230,8 @@ abstract class Category extends OBBTranslatable implements Node, Core\SEOKeyword
 	protected $products;
 
 	/**
-	 * @var \Openbizbox\CoreBundle\Entity\Translations\CategoryTranslation[] | \Doctrine\Common\Collections\ArrayCollection $translations
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\Translations\CategoryTranslation", mappedBy="object", cascade={"persist", "remove"})
+	 * @var \Angler\StoreBundle\Entity\Translations\CategoryTranslation[] | \Doctrine\Common\Collections\ArrayCollection $translations
+	 * @ORM\OneToMany(targetEntity="\Angler\StoreBundle\Entity\Translations\CategoryTranslation", mappedBy="object", cascade={"persist", "remove"})
 	*/
 	protected $translations;
 
@@ -468,7 +468,7 @@ abstract class Category extends OBBTranslatable implements Node, Core\SEOKeyword
 	}
 
 	/**
-	 * @return null | ArrayCollection | \Openbizbox\CoreBundle\Entity\KeywordFocused[]
+	 * @return null | ArrayCollection | \Angler\StoreBundle\Entity\KeywordFocused[]
 	 */
 	public function getFocusedKeywords() {
 		return $this->keywordsFocused;
@@ -483,7 +483,7 @@ abstract class Category extends OBBTranslatable implements Node, Core\SEOKeyword
 
 
 	/**
-	 * @return null | ArrayCollection | \Openbizbox\CoreBundle\Entity\KeywordAdditional[]
+	 * @return null | ArrayCollection | \Angler\StoreBundle\Entity\KeywordAdditional[]
 	 */
 	public function getAdditionalKeywords() {
 		return $this->keywordsAdditional;
@@ -581,7 +581,7 @@ abstract class Category extends OBBTranslatable implements Node, Core\SEOKeyword
 	}
 
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Openbizbox\CoreBundle\Entity\PriceRule[]
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Angler\StoreBundle\Entity\PriceRule[]
 	 */
 	public function getPriceRules() {
 		return $this->priceRules;
@@ -612,7 +612,7 @@ abstract class Category extends OBBTranslatable implements Node, Core\SEOKeyword
 	}
 
 	/**
-	 * @return \Openbizbox\CoreBundle\Entity\Category | null
+	 * @return \Angler\StoreBundle\Entity\Category | null
 	 */
 	public function getParent() {
 		return $this->parent;

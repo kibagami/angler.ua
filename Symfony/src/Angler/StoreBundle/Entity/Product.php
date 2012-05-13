@@ -5,7 +5,7 @@ namespace Angler\StoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
-use \Openbizbox\CoreBundle as Core;
+use \Angler\StoreBundle as Core;
 
 /**
  * Product
@@ -47,10 +47,10 @@ class Product extends Base\Product {
 	/**
 	 * Add article to product
 	 *
-	 * @param \Openbizbox\CoreBundle\Entity\ProductArticle $article
+	 * @param \Angler\StoreBundle\Entity\ProductArticle $article
 	 * @return void
 	 */
-	public function addArticle(\Openbizbox\CoreBundle\Entity\ProductArticle $article) {
+	public function addArticle(\Angler\StoreBundle\Entity\ProductArticle $article) {
 		$article->setProduct($this); // synchronously updating inverse side
 		foreach ($article->getProductArticleAttributeValues() as $attributeValue) {
 			$attribute = $attributeValue->getAttribute();
@@ -61,7 +61,7 @@ class Product extends Base\Product {
 		$this->getArticles()->add($article);
 	}
 
-	public function removeArticle(\Openbizbox\CoreBundle\Entity\ProductArticle $article) { // FIXME: add attributes recalculation
+	public function removeArticle(\Angler\StoreBundle\Entity\ProductArticle $article) { // FIXME: add attributes recalculation
 		$this->getArticles()->removeElement($article);
 	}
 
@@ -93,7 +93,7 @@ class Product extends Base\Product {
 		if ($qty > 1 && $tierPrices = $this->getTierPrices()) {
 			$reverse = array_reverse($tierPrices->getValues());
 			foreach ($reverse as $tierPrice) {
-				/** @var $tierPrice \Openbizbox\CoreBundle\Entity\ProductTierPrice */
+				/** @var $tierPrice \Angler\StoreBundle\Entity\ProductTierPrice */
 				if ($tierPrice->getQty() <= $qty)
 					$prices[] = (float)$tierPrice->getPrice();
 			}
@@ -112,10 +112,10 @@ class Product extends Base\Product {
 
 	/**
 	 * Minimal price - short alias for templates
-	 * @param null|\Openbizbox\CoreBundle\Entity\CustomerGroup $customerGroup
+	 * @param null|\Angler\StoreBundle\Entity\CustomerGroup $customerGroup
 	 * @return float
 	 */
-	public function getPrice(\Openbizbox\CoreBundle\Entity\CustomerGroup $customerGroup = null) {
+	public function getPrice(\Angler\StoreBundle\Entity\CustomerGroup $customerGroup = null) {
 		$price = $this->getCachedMinPrice();
 		if ($customerGroup) {
 			foreach($this->getIndexedPrices() as $priceIndexed) {
@@ -130,10 +130,10 @@ class Product extends Base\Product {
 
 	/**
 	 * Maximum price - short alias for templates
-	 * @param null|\Openbizbox\CoreBundle\Entity\CustomerGroup $customerGroup
+	 * @param null|\Angler\StoreBundle\Entity\CustomerGroup $customerGroup
 	 * @return float
 	 */
-	public function getMaxPrice(\Openbizbox\CoreBundle\Entity\CustomerGroup $customerGroup = null) {
+	public function getMaxPrice(\Angler\StoreBundle\Entity\CustomerGroup $customerGroup = null) {
 		$price = $this->getCachedMaxPrice();
 		if ($customerGroup) {
 			foreach($this->getIndexedPrices() as $priceIndexed) {
@@ -146,7 +146,7 @@ class Product extends Base\Product {
 		return $price;
 	}
 
-	public function getMaxDiscount(\Openbizbox\CoreBundle\Entity\CustomerGroup $customerGroup = null) {
+	public function getMaxDiscount(\Angler\StoreBundle\Entity\CustomerGroup $customerGroup = null) {
 		$discount = $this->maxDiscount;
 		if ($customerGroup) {
 			foreach($this->getIndexedPrices() as $priceIndexed) {
@@ -162,10 +162,10 @@ class Product extends Base\Product {
 	/**
 	 * Calculate price of first article
 	 * @param $qty
-	 * @param \Openbizbox\CoreBundle\Entity\CustomerGroup $customerGroup
+	 * @param \Angler\StoreBundle\Entity\CustomerGroup $customerGroup
 	 * @return float
 	 */
-	public function getMainArticlePrice($qty = 1, \Openbizbox\CoreBundle\Entity\CustomerGroup $customerGroup = null) {
+	public function getMainArticlePrice($qty = 1, \Angler\StoreBundle\Entity\CustomerGroup $customerGroup = null) {
 		return $this->getMainArticle()->getPrice($qty, $customerGroup);
 	}
 
@@ -176,14 +176,14 @@ class Product extends Base\Product {
 		if ($qty == 1) {
 			$this->setRawPrice($value);
 		} else {
-			$tierPrice = new \Openbizbox\CoreBundle\Entity\ProductTierPrice();
+			$tierPrice = new \Angler\StoreBundle\Entity\ProductTierPrice();
 			$tierPrice->setQty($qty);
 			$tierPrice->setPrice($value);
 			$this->addTierPrice($tierPrice);
 		}
 	}
 
-	private function addPriceIndex($minPrice, $maxPrice, $maxDiscount, \Openbizbox\CoreBundle\Entity\CustomerGroup $customerGroup) {
+	private function addPriceIndex($minPrice, $maxPrice, $maxDiscount, \Angler\StoreBundle\Entity\CustomerGroup $customerGroup) {
 		$found = false;
 		$priceIndexed = null;
 		foreach ($this->getIndexedPrices() as $priceIndexed) {
@@ -258,9 +258,9 @@ class Product extends Base\Product {
 
 	/**
 	 * @param null|Category $targetCategory
-	 * @return \Openbizbox\CoreBundle\Entity\Product
+	 * @return \Angler\StoreBundle\Entity\Product
 	 */
-	public function duplicate(\Openbizbox\CoreBundle\Entity\Category $targetCategory = null) {
+	public function duplicate(\Angler\StoreBundle\Entity\Category $targetCategory = null) {
 		$clone = clone $this;
 		if ($targetCategory) {
 			$clone->addCategory($targetCategory);
@@ -269,7 +269,7 @@ class Product extends Base\Product {
 	}
 
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Openbizbox\CoreBundle\Entity\PriceRule[]
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Angler\StoreBundle\Entity\PriceRule[]
 	 */
 	public function getPriceRulesAsPartOfThisCategory() {
 		$rules = new \Doctrine\Common\Collections\ArrayCollection;
@@ -282,7 +282,7 @@ class Product extends Base\Product {
 	}
 
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Openbizbox\CoreBundle\Entity\PriceRule[]
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Angler\StoreBundle\Entity\PriceRule[]
 	 */
 	public function getPriceRulesAsPartOfParentCategories() {
 		$rules = new \Doctrine\Common\Collections\ArrayCollection;
@@ -295,7 +295,7 @@ class Product extends Base\Product {
 	}
 
 
-	public function getPageTitle(\Openbizbox\CoreBundle\Entity\StrategyProductTitle $strategy = null) {
+	public function getPageTitle(\Angler\StoreBundle\Entity\StrategyProductTitle $strategy = null) {
 		$title = parent::getPageTitle();
 		if ($strategy) {
 			$strategy->setProduct($this);
@@ -304,7 +304,7 @@ class Product extends Base\Product {
 		return $title;
 	}
 
-	public function getPageMetaDescription(\Openbizbox\CoreBundle\Entity\StrategyProductDescription $strategy = null) {
+	public function getPageMetaDescription(\Angler\StoreBundle\Entity\StrategyProductDescription $strategy = null) {
 		$description = parent::getPageMetaDescription();
 		if ($strategy) {
 			$strategy->setProduct($this);
@@ -327,7 +327,7 @@ class Product extends Base\Product {
 	public function getWeight() {
 		$weight = null;
 		if (!$this->getHasVariants()) {
-			/** @var $article \Openbizbox\CoreBundle\Entity\ProductArticle */
+			/** @var $article \Angler\StoreBundle\Entity\ProductArticle */
 			if ($article = $this->getArticles()->current())
 				$weight = $article->getWeight();
 		}
@@ -448,7 +448,7 @@ class Product extends Base\Product {
 		else {
 			foreach ($this->getArticles() as $article) {
 				$validRelations = new ArrayCollection();
-				/** @var $relation \Openbizbox\CoreBundle\Entity\ProductArticleAttributeValue */
+				/** @var $relation \Angler\StoreBundle\Entity\ProductArticleAttributeValue */
 				foreach ($article->getProductArticleAttributeValues() as $key => $relation) {
 					if ($attributes->contains($relation->getAttribute())) {
 						$validRelations->add($relation);
@@ -490,7 +490,7 @@ class Product extends Base\Product {
 			$title = $title ? $title : $this->getTitle();
 		}
 		require_once(DIR_FS_MODULES . "/url_rewrite.php");
-		return \Openbizbox\CoreBundle\Helpers\URLHelper::encodeTitle($title);
+		return \Angler\StoreBundle\Helpers\URLHelper::encodeTitle($title);
 	}
 
 
@@ -513,18 +513,18 @@ class Product extends Base\Product {
 
 	/**
 	 *
-	 * @param \Openbizbox\CoreBundle\Entity\Product $alsoPurchasedProduct
+	 * @param \Angler\StoreBundle\Entity\Product $alsoPurchasedProduct
 	 * @deprecated FIXME we don't need this method (no need to run it inside checkuot, no need to cleanup old records
 	 *             here, etc). To simplify - we need to recalculate that table each night in cron script.
 	 *             That cron will also be aware of MIN_DISPLAY_ALSO_PURCHASED, ALSO_PURCHASED_ORDER_BY, and will NOT
 	 *             apply "limit 100" as it was doing before. Should process only last 90 days orders.
 	 */
-	public function addAlsoPurchasedProduct(\Openbizbox\CoreBundle\Entity\Product $alsoPurchasedProduct) {
+	public function addAlsoPurchasedProduct(\Angler\StoreBundle\Entity\Product $alsoPurchasedProduct) {
 		$relationTo = null;
 		$relations = $this->getProductToAlsoPurchasedProduct();
 
 		// First add relation to current product
-		/** @var $relation \Openbizbox\CoreBundle\Entity\ProductToAlsoPurchasedProduct */
+		/** @var $relation \Angler\StoreBundle\Entity\ProductToAlsoPurchasedProduct */
 		foreach ($relations as $relation) {
 			if ($relation->getProduct()->getId() == $this->getId() && $relation->getAlsoPurchasedProduct()->getId() == $alsoPurchasedProduct->getId()) {
 				$relationTo = $relation;
@@ -532,7 +532,7 @@ class Product extends Base\Product {
 			}
 		}
 		if (!$relationTo) {
-			$relationTo = new \Openbizbox\CoreBundle\Entity\ProductToAlsoPurchasedProduct();
+			$relationTo = new \Angler\StoreBundle\Entity\ProductToAlsoPurchasedProduct();
 			$relationTo->setProduct($this);
 			$relationTo->setAlsoPurchasedProduct($alsoPurchasedProduct);
 			$this->getProductToAlsoPurchasedProduct()->add($relationTo);
@@ -548,7 +548,7 @@ class Product extends Base\Product {
 			}
 		}
 		if (!$relationFrom) {
-			$relationFrom = new \Openbizbox\CoreBundle\Entity\ProductToAlsoPurchasedProduct();
+			$relationFrom = new \Angler\StoreBundle\Entity\ProductToAlsoPurchasedProduct();
 			$relationFrom->setProduct($alsoPurchasedProduct);
 			$relationFrom->setAlsoPurchasedProduct($this);
 			$alsoPurchasedProduct->getProductToAlsoPurchasedProduct()->add($relationFrom);
@@ -560,10 +560,10 @@ class Product extends Base\Product {
 	/**
 	 * Add file to product
 	 *
-	 * @param \Openbizbox\CoreBundle\Entity\ProductFile $file
+	 * @param \Angler\StoreBundle\Entity\ProductFile $file
 	 * @return void
 	 */
-	public function addFile(\Openbizbox\CoreBundle\Entity\ProductFile $file) {
+	public function addFile(\Angler\StoreBundle\Entity\ProductFile $file) {
 		$file->setProduct($this); // synchronously updating inverse side
 		$this->getFiles()->add($file);
 	}
@@ -571,15 +571,15 @@ class Product extends Base\Product {
 	/**
 	 * Remove file from the product
 	 *
-	 * @param \Openbizbox\CoreBundle\Entity\ProductFile $file
+	 * @param \Angler\StoreBundle\Entity\ProductFile $file
 	 * @return void
 	 */
-	public function removeFile(\Openbizbox\CoreBundle\Entity\ProductFile $file) {
+	public function removeFile(\Angler\StoreBundle\Entity\ProductFile $file) {
 		$this->getFiles()->removeElement($file);
 	}
 
 	/**
-	 * @param \Openbizbox\CoreBundle\Entity\Category $mainCategory
+	 * @param \Angler\StoreBundle\Entity\Category $mainCategory
 	 */
 	public function setMainCategory($mainCategory) {
 		$this->mainCategory = $mainCategory;
@@ -589,10 +589,10 @@ class Product extends Base\Product {
 	/**
 	 * Add image to product
 	 *
-	 * @param \Openbizbox\CoreBundle\Entity\ProductImage $image
+	 * @param \Angler\StoreBundle\Entity\ProductImage $image
 	 * @return void
 	 */
-	public function addImage(\Openbizbox\CoreBundle\Entity\ProductImage $image) {
+	public function addImage(\Angler\StoreBundle\Entity\ProductImage $image) {
 		$image->setProduct($this); // synchronously updating inverse side
 		$this->getImages()->add($image);
 	}
@@ -600,20 +600,20 @@ class Product extends Base\Product {
 	/**
 	 * Remove image from the product
 	 *
-	 * @param \Openbizbox\CoreBundle\Entity\ProductImage $image
+	 * @param \Angler\StoreBundle\Entity\ProductImage $image
 	 * @return void
 	 */
-	public function removeImage(\Openbizbox\CoreBundle\Entity\ProductImage $image) {
+	public function removeImage(\Angler\StoreBundle\Entity\ProductImage $image) {
 		$this->getImages()->removeElement($image);
 	}
 
 	/**
 	 * Add Category to products categories collection
 	 *
-	 * @param \Openbizbox\CoreBundle\Entity\Category $category
+	 * @param \Angler\StoreBundle\Entity\Category $category
 	 * @return void
 	 */
-	public function addCategory(\Openbizbox\CoreBundle\Entity\Category $category) {
+	public function addCategory(\Angler\StoreBundle\Entity\Category $category) {
 		if (!$this->getCategories()->exists(function($key, $cat) use ($category) {
 			return $cat === $category;
 		})
@@ -624,7 +624,7 @@ class Product extends Base\Product {
 		}
 	}
 
-	public function removeCategory(\Openbizbox\CoreBundle\Entity\Category $category) {
+	public function removeCategory(\Angler\StoreBundle\Entity\Category $category) {
 		if ($this->getCategories()->exists(function($key, $cat) use ($category) {
 			return $cat === $category;
 		})
@@ -636,7 +636,7 @@ class Product extends Base\Product {
 	}
 
 	public function addReview($customer, $rating, $locale, $text = '', $isEnabled = false) {
-		$review = new \Openbizbox\CoreBundle\Entity\ProductReview();
+		$review = new \Angler\StoreBundle\Entity\ProductReview();
 		$review->setProduct($this);
 		$review->setLocale($locale);
 		$review->setRating($rating);
@@ -648,26 +648,26 @@ class Product extends Base\Product {
 		}
 	}
 
-	public function addCrossSell(\Openbizbox\CoreBundle\Entity\Product $product, $sorting = 0) {
+	public function addCrossSell(\Angler\StoreBundle\Entity\Product $product, $sorting = 0) {
 		foreach ($this->getProductToCrossSells() as $productToCrossSell) {
 			if ($productToCrossSell->getCrossSellProduct()->getId() == $product->getId()) {
 				return;
 			}
 		}
-		$productToCrossSell = new \Openbizbox\CoreBundle\Entity\ProductToCrossSell;
+		$productToCrossSell = new \Angler\StoreBundle\Entity\ProductToCrossSell;
 		$this->getProductToCrossSells()->add($productToCrossSell);
 		$productToCrossSell->setProduct($this);
 		$productToCrossSell->setCrossSellProduct($product);
 		$productToCrossSell->setSorting($sorting);
 	}
 
-	public function addPlusSell(\Openbizbox\CoreBundle\Entity\Product $product, $sorting = 0) {
+	public function addPlusSell(\Angler\StoreBundle\Entity\Product $product, $sorting = 0) {
 		foreach ($this->getProductToPlusSells() as $productToPlusSell) {
 			if ($productToPlusSell->getPlusSell()->getId() == $product->getId()) {
 				return;
 			}
 		}
-		$productToPlusSell = new \Openbizbox\CoreBundle\Entity\ProductToPlusSell;
+		$productToPlusSell = new \Angler\StoreBundle\Entity\ProductToPlusSell;
 		$this->getProductToPlusSells()->add($productToPlusSell);
 		$productToPlusSell->setProduct($this);
 		$productToPlusSell->setPlusSell($product);
@@ -675,7 +675,7 @@ class Product extends Base\Product {
 	}
 
 	public function addBundle(array $articles, $price = 0) {
-		$bundle = new \Openbizbox\CoreBundle\Entity\ProductArticleBundle;
+		$bundle = new \Angler\StoreBundle\Entity\ProductArticleBundle;
 		$bundle->setProduct($this);
 		$bundle->setMainArticle($this->getArticles()->first());
 		foreach ($articles as $article) {
@@ -686,23 +686,23 @@ class Product extends Base\Product {
 		$this->getBundles()->add($bundle);
 	}
 
-	public function removeBundle(\Openbizbox\CoreBundle\Entity\ProductArticleBundle $bundle) {
+	public function removeBundle(\Angler\StoreBundle\Entity\ProductArticleBundle $bundle) {
 		$this->getBundles()->removeElement($bundle);
 	}
 
 	/**
-	 * @param \Openbizbox\CoreBundle\Entity\ProductTierPrice $tierPrice
+	 * @param \Angler\StoreBundle\Entity\ProductTierPrice $tierPrice
 
-	 * @internal param $ \Openbizbox\CoreBundle\Entity\ProductTierPrice
+	 * @internal param $ \Angler\StoreBundle\Entity\ProductTierPrice
 	 */
-	public function addTierPrice(\Openbizbox\CoreBundle\Entity\ProductTierPrice $tierPrice) {
+	public function addTierPrice(\Angler\StoreBundle\Entity\ProductTierPrice $tierPrice) {
 		$tierPrice->setProduct($this);
 		$this->getTierPrices()->add($tierPrice);
 	}
 
 	public function setSpecialPrice($discount, \DateTime $dateStart = null, \DateTime $dateEnd = null) {
 		if (!$special = $this->getSpecialRule()) {
-			$special = new \Openbizbox\CoreBundle\Entity\ProductSpecial;
+			$special = new \Angler\StoreBundle\Entity\ProductSpecial;
 		}
 		else {
 			$special->setPreviousDateStart($special->getDateStart());
@@ -829,9 +829,9 @@ class Product extends Base\Product {
 	}
 
 	/**
-	 * @param $keyword \Openbizbox\CoreBundle\Entity\KeywordFocused
+	 * @param $keyword \Angler\StoreBundle\Entity\KeywordFocused
 	 */
-	public function addFocusedKeyword(\Openbizbox\CoreBundle\Entity\KeywordFocused $keyword) {
+	public function addFocusedKeyword(\Angler\StoreBundle\Entity\KeywordFocused $keyword) {
 		foreach($this->getFocusedKeywords() as $word) {
 			if ($keyword->getLocale() == $word->getLocale()) {
 				return;
@@ -842,9 +842,9 @@ class Product extends Base\Product {
 	}
 
 	/**
-	 * @param $keyword \Openbizbox\CoreBundle\Entity\KeywordAdditional
+	 * @param $keyword \Angler\StoreBundle\Entity\KeywordAdditional
 	 */
-	public function addAdditionalKeyword(\Openbizbox\CoreBundle\Entity\KeywordAdditional $keyword) {
+	public function addAdditionalKeyword(\Angler\StoreBundle\Entity\KeywordAdditional $keyword) {
 		foreach($this->getAdditionalKeywords() as $word) {
 			if ($keyword->getLocale() == $word->getLocale()) {
 				return;
@@ -855,33 +855,33 @@ class Product extends Base\Product {
 	}
 
 	/**
-	 * @param $keyword null | \Openbizbox\CoreBundle\Entity\KeywordFocused
+	 * @param $keyword null | \Angler\StoreBundle\Entity\KeywordFocused
 	 */
-	public function removeFocusedKeyword(\Openbizbox\CoreBundle\Entity\KeywordFocused $keyword) {
+	public function removeFocusedKeyword(\Angler\StoreBundle\Entity\KeywordFocused $keyword) {
 		if(null === $keyword) return;
 		$this->getFocusedKeywords()->removeElement($keyword);
 	}
 
 	/**
-	 * @param $keyword \Openbizbox\CoreBundle\Entity\KeywordAdditional
+	 * @param $keyword \Angler\StoreBundle\Entity\KeywordAdditional
 	 */
-	public function removeAdditionalKeyword(\Openbizbox\CoreBundle\Entity\KeywordAdditional $keyword) {
+	public function removeAdditionalKeyword(\Angler\StoreBundle\Entity\KeywordAdditional $keyword) {
 		$this->getAdditionalKeywords()->removeElement($keyword);
 	}
 
 	/**
 	 * @param string $locale
-	 * @return null | \Openbizbox\CoreBundle\Entity\KeywordAdditional[]
+	 * @return null | \Angler\StoreBundle\Entity\KeywordAdditional[]
 	 */
 	public function getAdditionalKeywordsByLocale($locale) {
-		return $this->getAdditionalKeywords()->filter(function(\Openbizbox\CoreBundle\Entity\KeywordAdditional $keyword) use ($locale) {
+		return $this->getAdditionalKeywords()->filter(function(\Angler\StoreBundle\Entity\KeywordAdditional $keyword) use ($locale) {
 			return ($keyword->getLocale() == $locale);
 		});
 	}
 
 	/**
 	 * @param string $locale
-	 * @return null | \Openbizbox\CoreBundle\Entity\KeywordFocused
+	 * @return null | \Angler\StoreBundle\Entity\KeywordFocused
 	 */
 	public function getFocusedKeywordByLocale($locale) {
 		$result = null;
@@ -897,7 +897,7 @@ class Product extends Base\Product {
 	/**
 	 * @param string $text
 	 * @param string $locale
-	 * @return null | \Openbizbox\CoreBundle\Entity\KeywordAdditional
+	 * @return null | \Angler\StoreBundle\Entity\KeywordAdditional
 	 */
 	public function getAdditionalKeywordByTextAndLocale($text, $locale) {
 		$result = null;

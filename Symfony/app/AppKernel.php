@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new Angler\BackendBundle\AnglerBackendBundle(),
             new Angler\CheckoutBundle\AnglerCheckoutBundle(),
             new Angler\FrontendBundle\AnglerFrontendBundle(),
+            new Angler\UserBundle\AnglerUserBundle(),
+            new Angler\StoreBundle\AnglerStoreBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

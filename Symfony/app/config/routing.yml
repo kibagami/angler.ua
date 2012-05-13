@@ -1,3 +1,11 @@
+AnglerStoreBundle:
+    resource: "@AnglerStoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+AnglerUserBundle:
+    resource: "@AnglerUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 AnglerFrontendBundle:
     resource: "@AnglerFrontendBundle/Resources/config/routing.yml"
     prefix:   /

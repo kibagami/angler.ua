@@ -3,11 +3,12 @@
 namespace Angler\StoreBundle\Entity\Base;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
-use Doctrine\Common\Collections\ArrayCollection;
-use Openbizbox\CoreBundle as Core;
-use Openbizbox\CoreBundle\Model\OBBTranslatable;
+use Angler\StoreBundle as Store;
+use Angler\StoreBundle\Model\AnglerTranslatable;
+use Angler\StoreBundle\Interfaces\SEOKeywordsInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -15,9 +16,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * else. This is just to keep OUR logic clean from this long and no need to test code.
  *
  * @ORM\MappedSuperclass
- * @Gedmo\TranslationEntity(class="Openbizbox\CoreBundle\Entity\Translations\ProductTranslation")
+ * @Gedmo\TranslationEntity(class="Angler\StoreBundle\Entity\Translations\ProductTranslation")
  */
-abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterface {
+abstract class Product extends AnglerTranslatable implements SEOKeywordsInterface {
 
 	/**
 	 * @ORM\Id
@@ -362,8 +363,8 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	/** ----------------------- Associations ----------------------- */
 
 	/**
-	 * @var \Openbizbox\CoreBundle\Entity\ProductSpecial
-	 * @ORM\OneToOne(targetEntity="\Openbizbox\CoreBundle\Entity\ProductSpecial", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true, fetch="EAGER")
+	 * @var \Angler\CoreBundle\Entity\ProductSpecial
+	 * @ORM\OneToOne(targetEntity="\Angler\CoreBundle\Entity\ProductSpecial", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true, fetch="EAGER")
 	 */
 	protected $specialRule;
 
@@ -375,26 +376,26 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 
 	/**
 	 * @var \Doctrine\Common\Collections\ArrayCollection
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\ProductArticleBundle", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="\Angler\CoreBundle\Entity\ProductArticleBundle", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
 	 */
 	protected $bundles;
 
 	/**
-	 * @ORM\ManyToOne (targetEntity="\Openbizbox\CoreBundle\Entity\TaxClass")
+	 * @ORM\ManyToOne (targetEntity="\Angler\CoreBundle\Entity\TaxClass")
 	 * @ORM\JoinColumn(name="tax_class_id", referencedColumnName="tax_class_id", onDelete="SET NULL")
-	 * @var \Openbizbox\CoreBundle\Entity\TaxClass
+	 * @var \Angler\CoreBundle\Entity\TaxClass
 	 */
 	protected $taxClass;
 
 	/**
-	 * @ORM\ManyToOne (targetEntity="\Openbizbox\CoreBundle\Entity\Supplier")
+	 * @ORM\ManyToOne (targetEntity="\Angler\CoreBundle\Entity\Supplier")
 	 * @ORM\JoinColumn(name="supplier_id", referencedColumnName="supplier_id", onDelete="SET NULL")
 	 * @var Supplier
 	 */
 	protected $supplier;
 
 	/**
-	 * @ORM\ManyToOne (targetEntity="\Openbizbox\CoreBundle\Entity\Brand")
+	 * @ORM\ManyToOne (targetEntity="\Angler\CoreBundle\Entity\Brand")
 	 * @ORM\JoinColumn(name="brand_id", referencedColumnName="brand_id", onDelete="SET NULL")
 	 * @var Brand
 	 */
@@ -407,20 +408,20 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	protected $images;
 
 	/**
-	 * @var \Openbizbox\CoreBundle\Entity\KeywordFocused[] | \Doctrine\Common\Collections\ArrayCollection
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\KeywordFocused", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true, indexBy="locale")
+	 * @var \Angler\CoreBundle\Entity\KeywordFocused[] | \Doctrine\Common\Collections\ArrayCollection
+	 * @ORM\OneToMany(targetEntity="\Angler\CoreBundle\Entity\KeywordFocused", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true, indexBy="locale")
 	 */
 	protected $keywordsFocused;
 
 	/**
-	 * @var \Openbizbox\CoreBundle\Entity\KeywordAdditional[] | \Doctrine\Common\Collections\ArrayCollection
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\KeywordAdditional", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
+	 * @var \Angler\CoreBundle\Entity\KeywordAdditional[] | \Doctrine\Common\Collections\ArrayCollection
+	 * @ORM\OneToMany(targetEntity="\Angler\CoreBundle\Entity\KeywordAdditional", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
 	 */
 	protected $keywordsAdditional;
 
 	/**
-	 * @var \Doctrine\Common\Collections\ArrayCollection|\Openbizbox\CoreBundle\Entity\Category[]
-	 * @ORM\ManyToMany(targetEntity="\Openbizbox\CoreBundle\Entity\Category", inversedBy="products", cascade={"persist"})
+	 * @var \Doctrine\Common\Collections\ArrayCollection|\Angler\CoreBundle\Entity\Category[]
+	 * @ORM\ManyToMany(targetEntity="\Angler\CoreBundle\Entity\Category", inversedBy="products", cascade={"persist"})
 	 * @ORM\JoinTable(name="_obb_product_to_category", schema="product_to_category",
 	 *     joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="product_id", onDelete="CASCADE")},
 	 *     inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="category_id", onDelete="CASCADE")}
@@ -429,14 +430,14 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	protected $categories;
 
 	/**
-	 * @ORM\ManyToOne (targetEntity="\Openbizbox\CoreBundle\Entity\Category")
+	 * @ORM\ManyToOne (targetEntity="\Angler\CoreBundle\Entity\Category")
 	 * @ORM\JoinColumn(name="main_category_id", referencedColumnName="category_id", onDelete="SET NULL")
 	 * @var Category
 	 */
 	protected $mainCategory;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="\Openbizbox\CoreBundle\Entity\Attribute", inversedBy="products", cascade={"persist"})
+	 * @ORM\ManyToMany(targetEntity="\Angler\CoreBundle\Entity\Attribute", inversedBy="products", cascade={"persist"})
 	 * @ORM\JoinTable(
 	 *     name="_obb_product_to_attribute",
 	 *     joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="product_id", onDelete="CASCADE")},
@@ -447,14 +448,14 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 
 	/**
 	 * @var \Doctrine\Common\Collections\ArrayCollection
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\ProductToCrossSell", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="\Angler\CoreBundle\Entity\ProductToCrossSell", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
 	 * @ORM\OrderBy({"sorting" = "ASC"})
 	 */
 	protected $productToCrossSells;
 
 	/**
 	 * @var \Doctrine\Common\Collections\ArrayCollection
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\ProductToPlusSell", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="\Angler\CoreBundle\Entity\ProductToPlusSell", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
 	 * @ORM\OrderBy({"sorting" = "ASC"})
 	 */
 	protected $productToPlusSells;
@@ -462,27 +463,27 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	/**
 	 *
 	 * @var \Doctrine\Common\Collections\ArrayCollection
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\ProductFile", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="\Angler\CoreBundle\Entity\ProductFile", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
 	 * @ORM\OrderBy({"sorting" = "ASC", "filename" = "DESC"})
 	 */
 	protected $files;
 
 	/**
 	 * @var \Doctrine\Common\Collections\ArrayCollection
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\ProductTierPrice", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="\Angler\CoreBundle\Entity\ProductTierPrice", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
 	 * @ORM\OrderBy({"qty" = "ASC"})
 	 */
 	protected $tierPrices;
 
 	/**
 	 * @var \Doctrine\Common\Collections\ArrayCollection
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\ProductReview", mappedBy="product", cascade={"persist", "remove"})
+	 * @ORM\OneToMany(targetEntity="\Angler\CoreBundle\Entity\ProductReview", mappedBy="product", cascade={"persist", "remove"})
 	 * @ORM\OrderBy({"createdAt" = "DESC"})
 	 */
 	protected $reviews;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\ProductToAlsoPurchasedProduct", mappedBy="product", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="\Angler\CoreBundle\Entity\ProductToAlsoPurchasedProduct", mappedBy="product", cascade={"persist"})
 	 * FIXME: sort order could be either by orders_count or last purchased date (i.e. last_modified). Anyway seems this
 	 * one doesn't work at all:
 	 * @ORM\OrderBy({"ordersCount" = "DESC"})
@@ -502,14 +503,14 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	protected $indexedArticlePrices;
 
 	/**
-	 * @var \Openbizbox\CoreBundle\Entity\PriceRule[] | \Doctrine\Common\Collections\ArrayCollection
+	 * @var \Angler\CoreBundle\Entity\PriceRule[] | \Doctrine\Common\Collections\ArrayCollection
 	 * @ORM\ManyToMany(targetEntity="PriceRule", mappedBy="products", cascade={"persist"})
 	 */
 	protected $priceRules;
 
 	/**
-	 * @var \Openbizbox\CoreBundle\Entity\Translations\ProductTranslation[] | \Doctrine\Common\Collections\ArrayCollection $translations
-	 * @ORM\OneToMany(targetEntity="\Openbizbox\CoreBundle\Entity\Translations\ProductTranslation", mappedBy="object", cascade={"persist", "remove"})
+	 * @var \Angler\CoreBundle\Entity\Translations\ProductTranslation[] | \Doctrine\Common\Collections\ArrayCollection $translations
+	 * @ORM\OneToMany(targetEntity="\Angler\CoreBundle\Entity\Translations\ProductTranslation", mappedBy="object", cascade={"persist", "remove"})
 	*/
 	protected $translations;
 
@@ -544,7 +545,7 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	/**
 	 * Get product articles
 	 *
-	 * @return \Openbizbox\CoreBundle\Entity\ProductArticle[] | \Doctrine\Common\Collections\ArrayCollection
+	 * @return \Angler\CoreBundle\Entity\ProductArticle[] | \Doctrine\Common\Collections\ArrayCollection
 	 */
 	public function getArticles() {
 		return $this->articles;
@@ -671,10 +672,10 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 
 	/**
 	 * Get default image
-	 * @return null|\Openbizbox\CoreBundle\Entity\ProductImage
+	 * @return null|\Angler\CoreBundle\Entity\ProductImage
 	 */
 	public function getDefaultImage() { //FIXME: cover with test
-		/** @var $image \Openbizbox\CoreBundle\Entity\ProductImage */
+		/** @var $image \Angler\CoreBundle\Entity\ProductImage */
 		foreach ($this->getImages() as $image) {
 			if ($image->getIsDefault()) {
 				return $image;
@@ -685,7 +686,7 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	}
 
 	public function setDefaultImage($defaultImage) { //FIXME: cover with test
-		/** @var $image \Openbizbox\CoreBundle\Entity\ProductImage */
+		/** @var $image \Angler\CoreBundle\Entity\ProductImage */
 		foreach ($this->getImages() as $image) {
 			$image->setIsDefault($image === $defaultImage);
 		}
@@ -710,14 +711,14 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	}
 
 	/**
-	 * @param \Openbizbox\CoreBundle\Entity\Brand $brand
+	 * @param \Angler\CoreBundle\Entity\Brand $brand
 	 */
-	public function setBrand(\Openbizbox\CoreBundle\Entity\Brand $brand) {
+	public function setBrand(\Angler\CoreBundle\Entity\Brand $brand) {
 		$this->brand = $brand;
 	}
 
 	/**
-	 * @return \Openbizbox\CoreBundle\Entity\Brand
+	 * @return \Angler\CoreBundle\Entity\Brand
 	 */
 	public function getBrand() {
 		return $this->brand;
@@ -1236,21 +1237,21 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	}
 
 	/**
-	 * @param \Openbizbox\CoreBundle\Entity\Supplier $supplier
+	 * @param \Angler\CoreBundle\Entity\Supplier $supplier
 	 */
 	public function setSupplier($supplier) {
 		$this->supplier = $supplier;
 	}
 
 	/**
-	 * @return \Openbizbox\CoreBundle\Entity\Supplier
+	 * @return \Angler\CoreBundle\Entity\Supplier
 	 */
 	public function getSupplier() {
 		return $this->supplier;
 	}
 
 	/**
-	 * @return \Openbizbox\CoreBundle\Entity\Category
+	 * @return \Angler\CoreBundle\Entity\Category
 	 */
 	public function getMainCategory() {
 		return $this->mainCategory;
@@ -1293,14 +1294,14 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 
 	/**
 	 * Get all product categories
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Openbizbox\CoreBundle\Entity\Category[]
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Angler\CoreBundle\Entity\Category[]
 	 */
 	public function getCategories() {
 		return $this->categories;
 	}
 
 	public function getActiveCategories() {
-		return $this->getCategories()->filter(function(\Openbizbox\CoreBundle\Entity\Category $category) {
+		return $this->getCategories()->filter(function(\Angler\CoreBundle\Entity\Category $category) {
 			return $category->getIsActive();
 		});
 	}
@@ -1318,7 +1319,7 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	}
 
 	/**
-	 * @return \Openbizbox\CoreBundle\Entity\ProductToCrossSell[] | \Doctrine\Common\Collections\ArrayCollection
+	 * @return \Angler\CoreBundle\Entity\ProductToCrossSell[] | \Doctrine\Common\Collections\ArrayCollection
 	 */
 	public function getProductToCrossSells() {
 		return $this->productToCrossSells;
@@ -1328,12 +1329,12 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 		$this->productToCrossSells = $productToCrossSells;
 	}
 
-	public function removeCrossSell(\Openbizbox\CoreBundle\Entity\ProductToCrossSell $productToCrossSell) {
+	public function removeCrossSell(\Angler\CoreBundle\Entity\ProductToCrossSell $productToCrossSell) {
 		$this->getProductToCrossSells()->removeElement($productToCrossSell);
 	}
 
 	/**
-	 * @return \Openbizbox\CoreBundle\Entity\ProductToPlusSell[] | \Doctrine\Common\Collections\ArrayCollection
+	 * @return \Angler\CoreBundle\Entity\ProductToPlusSell[] | \Doctrine\Common\Collections\ArrayCollection
 	 */
 	public function getProductToPlusSells() {
 		return $this->productToPlusSells;
@@ -1343,12 +1344,12 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 		$this->productToPlusSells = $productToPlusSells;
 	}
 
-	public function removePlusSell(\Openbizbox\CoreBundle\Entity\ProductToPlusSell $productToPlusSell) {
+	public function removePlusSell(\Angler\CoreBundle\Entity\ProductToPlusSell $productToPlusSell) {
 		$this->getProductToPlusSells()->removeElement($productToPlusSell);
 	}
 
 	/**
-	 * @return \Openbizbox\CoreBundle\Entity\ProductArticleBundle[] | \Doctrine\Common\Collections\ArrayCollection
+	 * @return \Angler\CoreBundle\Entity\ProductArticleBundle[] | \Doctrine\Common\Collections\ArrayCollection
 	 */
 	public function getBundles() {
 		return $this->bundles;
@@ -1435,9 +1436,9 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	}
 
 	/**
-	 * @param \Openbizbox\CoreBundle\Entity\TaxClass $taxClass
+	 * @param \Angler\CoreBundle\Entity\TaxClass $taxClass
 	 */
-	public function setTaxClass(\Openbizbox\CoreBundle\Entity\TaxClass $taxClass = null) {
+	public function setTaxClass(\Angler\CoreBundle\Entity\TaxClass $taxClass = null) {
 		$this->taxClass = $taxClass;
 	}
 
@@ -1453,7 +1454,7 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	}
 
 	/**
-	 * @return \Openbizbox\CoreBundle\Entity\ProductTierPrice[] | \Doctrine\Common\Collections\ArrayCollection
+	 * @return \Angler\CoreBundle\Entity\ProductTierPrice[] | \Doctrine\Common\Collections\ArrayCollection
 	 */
 	public function getTierPrices() {
 		return $this->tierPrices;
@@ -1495,35 +1496,35 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	}
 
 	/**
-	 * @param \Openbizbox\CoreBundle\Entity\Base\decimal $cachedFormerPrice
+	 * @param \Angler\CoreBundle\Entity\Base\decimal $cachedFormerPrice
 	 */
 	public function setCachedFormerPrice($cachedFormerPrice) {
 		$this->cachedFormerPrice = $cachedFormerPrice;
 	}
 
 	/**
-	 * @return \Openbizbox\CoreBundle\Entity\Base\decimal
+	 * @return \Angler\CoreBundle\Entity\Base\decimal
 	 */
 	public function getCachedFormerPrice() {
 		return $this->cachedFormerPrice;
 	}
 
 	/**
-	 * @param \Openbizbox\CoreBundle\Entity\Base\decimal $rating
+	 * @param \Angler\CoreBundle\Entity\Base\decimal $rating
 	 */
 	public function setRating($rating) {
 		$this->rating = $rating;
 	}
 
 	/**
-	 * @return \Openbizbox\CoreBundle\Entity\Base\decimal
+	 * @return \Angler\CoreBundle\Entity\Base\decimal
 	 */
 	public function getRating() {
 		return $this->rating;
 	}
 
 	/**
-	 * @return array | ArrayCollection | \Openbizbox\CoreBundle\Entity\KeywordFocused[]
+	 * @return array | ArrayCollection | \Angler\CoreBundle\Entity\KeywordFocused[]
 	 */
 	public function getFocusedKeywords() {
 		return $this->keywordsFocused;
@@ -1537,7 +1538,7 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	}
 
 	/**
-	 * @return null | ArrayCollection | \Openbizbox\CoreBundle\Entity\KeywordAdditional[]
+	 * @return null | ArrayCollection | \Angler\CoreBundle\Entity\KeywordAdditional[]
 	 */
 	public function getAdditionalKeywords() {
 		return $this->keywordsAdditional;
@@ -1591,7 +1592,7 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	}
 
 	/**
-	 * @return \Openbizbox\CoreBundle\Entity\ProductToAlsoPurchasedProduct[] | \Doctrine\Common\Collections\ArrayCollection
+	 * @return \Angler\CoreBundle\Entity\ProductToAlsoPurchasedProduct[] | \Doctrine\Common\Collections\ArrayCollection
 	 */
 	public function getProductToAlsoPurchasedProduct() {
 		return $this->productToAlsoPurchasedProduct;
@@ -1626,14 +1627,14 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	}
 
 	/**
-	 * @return \Openbizbox\CoreBundle\Entity\ProductPriceIndex[] | \Doctrine\Common\Collections\ArrayCollection
+	 * @return \Angler\CoreBundle\Entity\ProductPriceIndex[] | \Doctrine\Common\Collections\ArrayCollection
 	 */
 	public function getIndexedPrices() {
 		return $this->indexedPrices;
 	}
 
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Openbizbox\CoreBundle\Entity\PriceRule[]
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Angler\CoreBundle\Entity\PriceRule[]
 	 */
 	public function getPriceRules() {
 		return $this->priceRules;
@@ -1655,14 +1656,14 @@ abstract class Product extends OBBTranslatable implements Core\SEOKeywordsInterf
 	}
 
 	/**
-	 * @param \Openbizbox\CoreBundle\Entity\ProductSpecial|null $specialRule
+	 * @param \Angler\CoreBundle\Entity\ProductSpecial|null $specialRule
 	 */
-	public function setSpecialRule(\Openbizbox\CoreBundle\Entity\ProductSpecial $specialRule = null) {
+	public function setSpecialRule(\Angler\CoreBundle\Entity\ProductSpecial $specialRule = null) {
 		$this->specialRule = $specialRule;
 	}
 
 	/**
-	 * @return \Openbizbox\CoreBundle\Entity\ProductSpecial
+	 * @return \Angler\CoreBundle\Entity\ProductSpecial
 	 */
 	public function getSpecialRule() {
 		return $this->specialRule;

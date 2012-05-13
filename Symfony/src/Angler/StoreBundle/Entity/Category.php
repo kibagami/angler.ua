@@ -1,6 +1,6 @@
 <?php
 
-namespace Openbizbox\CoreBundle\Entity;
+namespace Angler\StoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Category
  * @Gedmo\Tree(type="nested")
  * @ORM\HasLifecycleCallbacks
- * @ORM\Entity(repositoryClass="Openbizbox\CoreBundle\Repository\CategoryRepository")
+ * @ORM\Entity(repositoryClass="Angler\StoreBundle\Repository\CategoryRepository")
  * @ORM\Table(name="_obb_category")
  */
 class Category extends Base\Category {
@@ -101,9 +101,9 @@ class Category extends Base\Category {
 	}
 
 	/**
-	 * @param $parent \Openbizbox\CoreBundle\Entity\Category|null
+	 * @param $parent \Angler\StoreBundle\Entity\Category|null
 	 */
-	public function setParent(\Openbizbox\CoreBundle\Entity\Category $parent = null) {
+	public function setParent(\Angler\StoreBundle\Entity\Category $parent = null) {
 		$this->removeParent(); // for updating ActiveProductsCount for old parents
 
 		if ($parent) {
@@ -160,7 +160,7 @@ class Category extends Base\Category {
 	/**
 	 * Get all products of category
 	 *
-	 * @return \Doctrine\Common\Collections\ArrayCollection | \Openbizbox\CoreBundle\Entity\Product[]
+	 * @return \Doctrine\Common\Collections\ArrayCollection | \Angler\StoreBundle\Entity\Product[]
 	 */
 	public function getProducts() {
 		return $this->products;
@@ -170,11 +170,11 @@ class Category extends Base\Category {
 	 * Add product to products collection
 	 * not handling adding of category to product
 	 *
-	 * @param \Openbizbox\CoreBundle\Entity\Base\Product $product
+	 * @param \Angler\StoreBundle\Entity\Base\Product $product
 	 * @return void
 	 * FIXME: cover it with tests
 	 */
-	public function addProduct(\Openbizbox\CoreBundle\Entity\Base\Product $product) {
+	public function addProduct(\Angler\StoreBundle\Entity\Base\Product $product) {
 		if (!$this->getProducts()->exists(function($key, $p) use ($product) {
 			return $p === $product;
 		})
@@ -226,7 +226,7 @@ class Category extends Base\Category {
 		return $this->children;
 	}
 
-	public function getPageTitle(\Openbizbox\CoreBundle\Entity\StrategyCategoryTitle $strategy = null) {
+	public function getPageTitle(\Angler\StoreBundle\Entity\StrategyCategoryTitle $strategy = null) {
 		$title = $this->getHeadingTitle();
 		if ($strategy) {
 			$strategy->setCategory($this);
@@ -235,7 +235,7 @@ class Category extends Base\Category {
 		return $title;
 	}
 
-	public function getMetaDescription(\Openbizbox\CoreBundle\Entity\StrategyCategoryDescription $strategy = null) {
+	public function getMetaDescription(\Angler\StoreBundle\Entity\StrategyCategoryDescription $strategy = null) {
 		$description = parent::getMetaDescription();
 		if ($strategy) {
 			$strategy->setCategory($this);
@@ -254,7 +254,7 @@ class Category extends Base\Category {
 
 	/*
 	public function addAdditionalKeyword($text, $locale) {
-		$keyword = new \Openbizbox\CoreBundle\Entity\KeywordAdditional;
+		$keyword = new \Angler\StoreBundle\Entity\KeywordAdditional;
 		$keyword->setLocale($locale);
 		$keyword->setText($text);
 		$keyword->setCategory($this);
@@ -262,7 +262,7 @@ class Category extends Base\Category {
 	}
 
 	public function addFocusedKeyword($text, $locale) {
-		$keyword = new \Openbizbox\CoreBundle\Entity\KeywordFocused;
+		$keyword = new \Angler\StoreBundle\Entity\KeywordFocused;
 		$keyword->setLocale($locale);
 		$keyword->setText($text);
 		$keyword->setCategory($this);
@@ -339,30 +339,30 @@ class Category extends Base\Category {
 	public function getEnabledChildren() { // FIXME cover with tests
 		return $this->getChildren()->filter(
 			function($category) {
-				/** @var $category \Openbizbox\CoreBundle\Entity\Category */
+				/** @var $category \Angler\StoreBundle\Entity\Category */
 				return $category->getIsEnabled();
 			}
 		);
 	}
 
 	/**
-	 * @param $keyword null|\Openbizbox\CoreBundle\Entity\KeywordFocused
+	 * @param $keyword null|\Angler\StoreBundle\Entity\KeywordFocused
 	 */
-	public function removeFocusedKeyword(\Openbizbox\CoreBundle\Entity\KeywordFocused $keyword) {
+	public function removeFocusedKeyword(\Angler\StoreBundle\Entity\KeywordFocused $keyword) {
 		$this->getFocusedKeywords()->removeElement($keyword);
 	}
 
 	/**
-	 * @param $keyword null|\Openbizbox\CoreBundle\Entity\KeywordAdditional
+	 * @param $keyword null|\Angler\StoreBundle\Entity\KeywordAdditional
 	 */
-	public function removeAdditionalKeyword(\Openbizbox\CoreBundle\Entity\KeywordAdditional $keyword) {
+	public function removeAdditionalKeyword(\Angler\StoreBundle\Entity\KeywordAdditional $keyword) {
 		$this->getAdditionalKeywords()->removeElement($keyword);
 	}
 
 	/**
-	 * @param $keyword \Openbizbox\CoreBundle\Entity\KeywordFocused
+	 * @param $keyword \Angler\StoreBundle\Entity\KeywordFocused
 	 */
-	public function addFocusedKeyword(\Openbizbox\CoreBundle\Entity\KeywordFocused $keyword) {
+	public function addFocusedKeyword(\Angler\StoreBundle\Entity\KeywordFocused $keyword) {
 		foreach($this->getFocusedKeywords() as $word) {
 			if ($keyword->getLocale() == $word->getLocale()) {
 				return;
@@ -373,9 +373,9 @@ class Category extends Base\Category {
 	}
 
 	/**
-	 * @param $keyword \Openbizbox\CoreBundle\Entity\KeywordAdditional
+	 * @param $keyword \Angler\StoreBundle\Entity\KeywordAdditional
 	 */
-	public function addAdditionalKeyword(\Openbizbox\CoreBundle\Entity\KeywordAdditional $keyword) {
+	public function addAdditionalKeyword(\Angler\StoreBundle\Entity\KeywordAdditional $keyword) {
 		foreach($this->getAdditionalKeywords() as $word) {
 			if ($keyword->getLocale() == $word->getLocale()) {
 				return;
@@ -387,17 +387,17 @@ class Category extends Base\Category {
 
 	/**
 	 * @param string $locale
-	 * @return null|\Openbizbox\CoreBundle\Entity\KeywordAdditional[]
+	 * @return null|\Angler\StoreBundle\Entity\KeywordAdditional[]
 	 */
 	public function getAdditionalKeywordsByLocale($locale) {
-		return $this->getAdditionalKeywords()->filter(function(\Openbizbox\CoreBundle\Entity\KeywordAdditional $keyword) use ($locale) {
+		return $this->getAdditionalKeywords()->filter(function(\Angler\StoreBundle\Entity\KeywordAdditional $keyword) use ($locale) {
 			return ($keyword->getLocale() == $locale);
 		});
 	}
 
 	/**
 	 * @param string $locale
-	 * @return null|\Openbizbox\CoreBundle\Entity\KeywordFocused[]
+	 * @return null|\Angler\StoreBundle\Entity\KeywordFocused[]
 	 */
 	public function getFocusedKeywordByLocale($locale) {
 		return isset($this->keywordsFocused[$locale]) ? $this->keywordsFocused[$locale] : null;
@@ -406,7 +406,7 @@ class Category extends Base\Category {
 	/**
 	 * @param string $text
 	 * @param string $locale
-	 * @return null|\Openbizbox\CoreBundle\Entity\KeywordAdditional
+	 * @return null|\Angler\StoreBundle\Entity\KeywordAdditional
 	 */
 	public function getAdditionalKeywordByTextAndLocale($text, $locale) {
 		$result = null;
@@ -422,7 +422,7 @@ class Category extends Base\Category {
 	/**
 	 * @param string $text
 	 * @param string $locale
-	 * @return null|\Openbizbox\CoreBundle\Entity\KeywordAdditional
+	 * @return null|\Angler\StoreBundle\Entity\KeywordAdditional
 	 */
 	public function removeAdditionalKeywordByTextAndLocale($text, $locale) {
 		$result = null;
