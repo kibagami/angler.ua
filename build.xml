@@ -111,7 +111,7 @@
 		<exec command="chmod -R 777 Symfony/app/cache/" dir="${project.basedir}" />
 	</target>
 
-	<target name="assetic-dump" depends="cache-clear" description="Deploy assetic resources">
+	<target name="assetic-dump" description="Deploy assetic resources">
 		<exec command="Symfony/app/console assetic:dump --env=dev" dir="${project.basedir}" passthru="true" checkreturn="true" />
 		<exec command="Symfony/app/console assetic:dump --env=prod --no-debug" dir="${project.basedir}" passthru="true" checkreturn="true" />
 		<exec command="chmod -R 777 Symfony/app/cache/" dir="${project.basedir}" />
