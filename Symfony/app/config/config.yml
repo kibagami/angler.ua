@@ -45,6 +45,12 @@ doctrine:
         user:     %database_user%
         password: %database_password%
         charset:  UTF8
+        mapping_types:
+            set: string
+            enum: string
+            blob: string
+            binary: string
+            longblob: string
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%

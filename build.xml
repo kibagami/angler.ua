@@ -20,11 +20,10 @@
 		<exec command="phing -l" dir="${project.basedir}" passthru="true" />
 	</target>
 
-	<target name="install" depends="configure, vendors-install, cache-clear, assetic-dump" description="Fully prepare project after checkout">
+	<target name="install" depends="configure, cache-clear, assetic-dump" description="Fully prepare project after checkout">
 	</target>
 
 	<target name="configure" depends="set-permissions" description="Place a config file (if not yet)">
-		<echo msg="Creating needed symlinks for design/oscomerce"/>
 		<available file="${project.config}" property="config.exists" value="1"/>
 		<if>
 			<equals arg1="${config.exists}" arg2="1"/>
@@ -101,7 +100,7 @@
 		</if>
 	</target>
 
-	<target name="vendors-install" description="Install vendors">
+	<target name="vendors-install" depends="set-permissions" description="Install vendors">
 		<exec command="Symfony/bin/vendors install" dir="${project.basedir}" passthru="true" checkreturn="true" />
 	</target>
 
