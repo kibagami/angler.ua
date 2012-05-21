@@ -1,4 +1,5 @@
 Symfony/vendor/
+Symfony/web/backend/
 Symfony/web/bundles/
 Symfony/web/css/
 Symfony/web/js/
