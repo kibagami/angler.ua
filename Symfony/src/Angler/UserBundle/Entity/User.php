@@ -2,15 +2,16 @@
 namespace Angler\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use \Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use \Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Angler\UserBundle\Entity\User
  *
- * @ORM\Table(name="angler_users")
- * @ORM\Entity(repositoryClass="Angler\UserBundle\Entity\UserRepository")
+ * @ORM\Table(name="angler_user")
+ * @ORM\Entity(repositoryClass="Angler\UserBundle\Repository\UserRepository")
  */
-class User implements UserInterface {
+class User implements AdvancedUserInterface {
 
 	/**
 	 * @ORM\Column(type="integer")
@@ -58,6 +59,7 @@ class User implements UserInterface {
 
 	/**
 	 * @inheritDoc
+	 * @return string
 	 */
 	public function getSalt() {
 		return $this->salt;
@@ -72,6 +74,7 @@ class User implements UserInterface {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function getRoles() {
 		return array('ROLE_USER');
@@ -85,8 +88,148 @@ class User implements UserInterface {
 
 	/**
 	 * @inheritDoc
+	 * @param \Symfony\Component\Security\Core\User\AdvancedUserInterface|\Symfony\Component\Security\Core\User\UserInterface $user
+	 * @return bool
 	 */
 	public function equals(UserInterface $user) {
 		return $this->username === $user->getUsername();
+	}
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+		$password =
+
+        $this->password = $password;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+	/**
+	 * Checks whether the user's account has expired.
+	 *
+	 * Internally, if this method returns false, the authentication system
+	 * will throw an AccountExpiredException and prevent login.
+	 *
+	 * @return Boolean true if the user's account is non expired, false otherwise
+	 *
+	 * @see AccountExpiredException
+	 */
+	function isAccountNonExpired() {
+		return true;
+	}
+
+	/**
+	 * Checks whether the user is locked.
+	 *
+	 * Internally, if this method returns false, the authentication system
+	 * will throw a LockedException and prevent login.
+	 *
+	 * @return Boolean true if the user is not locked, false otherwise
+	 *
+	 * @see LockedException
+	 */
+	function isAccountNonLocked() {
+		return true;
+	}
+
+	/**
+	 * Checks whether the user's credentials (password) has expired.
+	 *
+	 * Internally, if this method returns false, the authentication system
+	 * will throw a CredentialsExpiredException and prevent login.
+	 *
+	 * @return Boolean true if the user's credentials are non expired, false otherwise
+	 *
+	 * @see CredentialsExpiredException
+	 */
+	function isCredentialsNonExpired() {
+		return true;
+	}
+
+	/**
+	 * Checks whether the user is enabled.
+	 *
+	 * Internally, if this method returns false, the authentication system
+	 * will throw a DisabledException and prevent login.
+	 *
+	 * @return Boolean true if the user is enabled, false otherwise
+	 *
+	 * @see DisabledException
+	 */
+	function isEnabled() {
+		return $this->isActive;
 	}
 }

@@ -1,6 +1,10 @@
 AnglerBackendBundle_login:
     pattern:  /login/
-    defaults: { _controller: AnglerBackendBundle:Default:login }
+    defaults: { _controller: AnglerBackendBundle:Authentication:login }
+
+AnglerBackendBundle_login_check:
+    pattern:  /login_check/
+
 
 AnglerBackendBundle_homepage:
     pattern:  /

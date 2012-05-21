@@ -11,8 +11,4 @@ class DefaultController extends Controller {
 
 		return $this->render('AnglerBackendBundle:Default:index.html.php', $data);
 	}
-
-	public function loginAction() {
-		return $this->render('AnglerBackendBundle:Default:login.html.php');
-	}
 }
