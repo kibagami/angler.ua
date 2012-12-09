@@ -4,11 +4,13 @@ namespace Angler\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use \Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use \Symfony\Component\Security\Core\User\UserInterface;
+use \Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Angler\UserBundle\Entity\User
  *
- * @ORM\Table(name="angler_user")
+ * @ORM\Table(name="angler_users")
  * @ORM\Entity(repositoryClass="Angler\UserBundle\Repository\UserRepository")
  */
 class User implements AdvancedUserInterface {
@@ -45,9 +47,16 @@ class User implements AdvancedUserInterface {
 	 */
 	private $isActive;
 
+	/**
+	 * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+	 *
+	 */
+	private $roles;
+
 	public function __construct() {
 		$this->isActive = true;
 		$this->salt     = md5(uniqid(null, true));
+		$this->roles   = new ArrayCollection();
 	}
 
 	/**
@@ -77,11 +86,15 @@ class User implements AdvancedUserInterface {
 	 * @return array
 	 */
 	public function getRoles() {
-		return array('ROLE_USER');
+		return $this->roles->toArray();
+	}
+
+	public function getRoleObjects() {
+		return $this->roles;
 	}
 
 	/**
-	 * @inheritDoc
+	 * @return void
 	 */
 	public function eraseCredentials() {
 	}
@@ -95,87 +108,79 @@ class User implements AdvancedUserInterface {
 		return $this->username === $user->getUsername();
 	}
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	/**
+	 * Get id
+	 *
+	 * @return integer
+	 */
+	public function getId() {
+		return $this->id;
+	}
 
-    /**
-     * Set username
-     *
-     * @param string $username
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    }
+	/**
+	 * Set username
+	 *
+	 * @param string $username
+	 */
+	public function setUsername($username) {
+		$this->username = $username;
+	}
 
-    /**
-     * Set salt
-     *
-     * @param string $salt
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-    }
+	/**
+	 * Set salt
+	 *
+	 * @param string $salt
+	 */
+	public function setSalt($salt) {
+		$this->salt = $salt;
+	}
 
-    /**
-     * Set password
-     *
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
+	/**
+	 * Set password
+	 *
+	 * @param string $password
+	 */
+	public function setPassword($password) {
 		$password =
 
-        $this->password = $password;
-    }
+		$this->password = $password;
+	}
 
-    /**
-     * Set email
-     *
-     * @param string $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
+	/**
+	 * Set email
+	 *
+	 * @param string $email
+	 */
+	public function setEmail($email) {
+		$this->email = $email;
+	}
 
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
+	/**
+	 * Get email
+	 *
+	 * @return string
+	 */
+	public function getEmail() {
+		return $this->email;
+	}
 
-    /**
-     * Set isActive
-     *
-     * @param boolean $isActive
-     */
-    public function setIsActive($isActive)
-    {
-        $this->isActive = $isActive;
-    }
+	/**
+	 * Set isActive
+	 *
+	 * @param boolean $isActive
+	 */
+	public function setIsActive($isActive) {
+		$this->isActive = $isActive;
+	}
 
-    /**
-     * Get isActive
-     *
-     * @return boolean 
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
-    }
+	/**
+	 * Get isActive
+	 *
+	 * @return boolean
+	 */
+	public function getIsActive() {
+		return $this->isActive;
+	}
 
 	/**
 	 * Checks whether the user's account has expired.
@@ -231,5 +236,34 @@ class User implements AdvancedUserInterface {
 	 */
 	function isEnabled() {
 		return $this->isActive;
+	}
+
+	public function setRoleObjects($roles) {
+		$this->roles = $roles;
+	}
+
+	/**
+	 * @param $role Role
+	 */
+	public function addRoleObjects($role) {
+		$role->addUser($this);
+		$this->roles->add($role);
+	}
+
+	/**
+	 * Add role
+	 *
+	 * @param \Angler\UserBundle\Entity\Role $role
+	 */
+    public function addRole(\Angler\UserBundle\Entity\Role $role)
+    {
+        $this->roles->add($role);
+    }
+
+	public static function loadValidatorMetadata(\Symfony\Component\Validator\Mapping\ClassMetadata $metadata) {
+		$metadata->addPropertyConstraint('username', new Assert\MaxLength(array(
+			'limit' => 12,
+			'message' => 'This value is too long',
+		)));
 	}
 }

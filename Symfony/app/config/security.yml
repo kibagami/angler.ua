@@ -1,3 +1,7 @@
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
+
 security:
     encoders:
         Angler\UserBundle\Entity\User:
@@ -26,22 +30,24 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-#        login:
-#            pattern:  ^/backend/login/$
-#            security: true
-
         login:
             pattern:  ^/backend/login/$
             security: false
 
-        secured_area:
+        backend:
+            remember_me:
+                key: "%secret%"
+                lifetime: 600
+                path: /backend/
+                domain: ~
             pattern:    ^/backend/
             form_login:
                 check_path: /backend/login_check/
                 login_path: /backend/login/
+                default_target_path: /backend/
             logout:
                 path:   /backend/logout/
-                target: /backend/
+                target: /backend/login/
 
 
     access_control:

@@ -1,0 +1,7 @@
+parameters:
+#    angler_test.example.class: Angler\TestBundle\Example
+
+services:
+#    angler_test.example:
+#        class: %angler_test.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

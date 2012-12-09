@@ -2,6 +2,11 @@ html, body {
 	height: 100%;
 }
 
+table {
+	border: 0;
+	border-collapse: collapse;
+}
+
 #_GPL_e6a00_div {
 	display: none;
 }
@@ -28,6 +33,10 @@ html, body {
 / / zoom : 1;
 }
 
+.b-bold {
+	 font-weight: bold;
+}
+
 .b-fl {
 	float: left;
 }
@@ -36,10 +45,26 @@ html, body {
 	float: right;
 }
 
+.b-al {
+	text-align: left;
+}
+
+.b-ar {
+	text-align: right;
+}
+
+.b-ac {
+	text-align: center;
+}
+
+
 .hidden {
 	display: none;
 }
 
+.wide {
+	width: 100%;
+}
 /* /Common classes */
 
 .top-list li a:hover,
@@ -51,6 +76,7 @@ html, body {
 
 .b-page {
 	min-height: 100%;
+	overflow: auto;
 	/* background-color: #39414a; */
 }
 
@@ -389,16 +415,19 @@ table.auth-links .register-link {
 
 /* Search */
 .b-search-box {
-	padding: 0.25em 40px 0.45em 0.35em;
 	background: white;
+	/*padding: 0 40px 0 0.35em;*/
 }
 
 .b-search-input {
 	border: 0;
 	width: 100%;
 	outline: none;
+	height: 2em;
 	font-size: 0.6875em;
+	padding: 0.25em 40px 0.65em 0.35em;
 	font-family: Verdana, arial, san-serif, serif;
+	box-sizing: border-box;
 }
 
 /* /Search */
@@ -409,5 +438,69 @@ table.auth-links .register-link {
 	height: 160px;
 	position: relative;
 }
-
 /* /Footer */
+
+/* Padding */
+.b-reduce_tiny {
+	padding: 0.3em
+}
+
+.b-reduce_small {
+	padding: 0.6em
+}
+
+.b-reduce_middle {
+	padding: 1.2em;
+}
+
+.b-reduce_large {
+	padding: 1.8em;
+}
+
+/* /Padding */
+
+/* Form elements */
+/*input[type="text"],*/
+/*input[type="password"] {*/
+	/*border: 1px solid #999;*/
+	/*padding: 0.2em;*/
+	/*border-radius: 2px;*/
+/*}*/
+
+/*button {*/
+	/*padding: 0.35em 1em 0.35em 1em;*/
+/*}*/
+
+.b-choices {
+	overflow: auto;
+	margin: 1ex auto;
+}
+.b-choices .b-choice {
+	margin: 0.2em 0;
+}
+
+.b-choices-inline .b-choice {
+	display: inline-block;
+	margin-right: 2em;
+}
+
+.b-choices .b-choice:first-child {
+	margin-top: 0;
+}
+
+.b-choices .b-choice:last-child {
+	margin-bottom: 0;
+}
+
+.b-choice {
+	padding: 0.15em 0;
+}
+
+.b-choice input[type="checkbox"],
+.b-choice input[type="radio"]{
+	position: relative;
+	top: 2px;
+	margin: 0;
+}
+/* /Form elements */
+

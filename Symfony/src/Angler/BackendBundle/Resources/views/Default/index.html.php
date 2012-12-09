@@ -33,3 +33,14 @@
 <script type="text/javascript" src="<?= $view->escape($url) ?>"></script>
 <? endforeach ?>
 <? $view['slots']->stop() ?>
+
+
+<?
+/** @var $view \Symfony\Bundle\FrameworkBundle\Templating\PhpEngine */
+/** @var $form \Symfony\Component\Form\FormView */
+/** @var $formHelper \Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper */
+
+$formHelper = $view['form']
+
+?>
+<? $formHelper->setTheme($form, "AnglerBackendBundle:Form")?>

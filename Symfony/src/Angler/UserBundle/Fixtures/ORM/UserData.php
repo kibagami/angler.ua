@@ -2,12 +2,15 @@
 namespace Angler\UserBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use \Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Angler\UserBundle\Entity\User;
 
-class UserData  implements FixtureInterface, ContainerAwareInterface {
+class UserData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface {
+	/** @var $container  */
 	private $container;
 
 	public function setContainer(ContainerInterface $container = null)
@@ -30,5 +33,12 @@ class UserData  implements FixtureInterface, ContainerAwareInterface {
 
 		$manager->persist($adminUser);
 		$manager->flush();
+
+		$this->addReference('admin-user', $adminUser);
 	}
+
+	public function getOrder() {
+		return 1;
+	}
+
 }

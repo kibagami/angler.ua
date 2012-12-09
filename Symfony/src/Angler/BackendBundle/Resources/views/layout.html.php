@@ -158,18 +158,58 @@
 		</div>
 		<!-- /Toolbar -->
 
-		<? $view['slots']->output('_content') ?>
+
+		<div class="b-grid-row">
+
+			<div class="b-grid-box b-grid-box__filled">
+
+				<div class="b-grid-layout b-grid-box__reducer cfx">
+					<div class="b-grid-column b-grid-column__right">
+						<!-- Search -->
+						<div class="b-search" id="search">
+							<form method="post" action="">
+								<div class="b-search-box cfx">
+									<input type="text" name="search[keyword]" class="b-search-input">
+								</div>
+							</form>
+						</div>
+						<!-- /Search -->
+					</div>
+					<div class="b-grid-layout__wrapper">
+						<div class="b-grid-column b-grid-column__center">
+							<!-- Navigation -->
+							<?= $view->render('AnglerBackendBundle:Default:partial/navigation.html.php') ?>
+							<!-- /Navigation -->
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="b-grid-row">
+			<div class="b-grid-box">
+				<?= $view->render('AnglerBackendBundle:Default:partial/breadcrumbs.html.php') ?>
+			</div>
+		</div>
+
+		<div class="b-grid-row">
+			<div class="b-grid-box">
+				<? $view['slots']->output('_content') ?>
+			</div>
+		</div>
 	</div>
 </div>
 
 <div class="b-grid-row">
-	<div class="b-grid-box b-grid-box_filled" id="footer">
-		<div class="b-grid-box_reducer">
+	<div class="b-grid-box b-grid-box__filled" id="footer">
+		<div class="b-grid-box__reducer">
 			Footer content
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
+	$.ready(function(){
 		window.ui = new UI({ 'default_page' : 'landpage' });
 
 		ui.init();
@@ -181,6 +221,7 @@
 			}
 		});
 		ui.show();
+	});
 </script>
 
 <? $view['slots']->stop() ?>

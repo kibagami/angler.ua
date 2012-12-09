@@ -13,17 +13,18 @@ class AppKernel extends Kernel
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-            new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-            new Symfony\Bundle\DoctrineFixturesBundle\DoctrineFixturesBundle(),
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new JMS\AopBundle\JMSAopBundle(),
+            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-            new Angler\CoreBundle\AnglerCoreBundle(),
             new Angler\BackendBundle\AnglerBackendBundle(),
-            new Angler\CheckoutBundle\AnglerCheckoutBundle(),
+            new Angler\CoreBundle\AnglerCoreBundle(),
             new Angler\FrontendBundle\AnglerFrontendBundle(),
             new Angler\UserBundle\AnglerUserBundle(),
-            new Angler\StoreBundle\AnglerStoreBundle(),
+            new Angler\CheckoutBundle\AnglerCheckoutBundle(),
+            new Angler\TestBundle\AnglerTestBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

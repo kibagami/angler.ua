@@ -1,7 +1,10 @@
 <?
-/** @var $view \Symfony\Bundle\FrameworkBundle\Templating\PhpEngine */
-/** @var $asseticHelper \Symfony\Bundle\AsseticBundle\Templating\AsseticHelper */
-/** @var $assetsHelper \Symfony\Component\Templating\Helper\AssetsHelper */
+
+/**
+ * @var $view \Symfony\Bundle\FrameworkBundle\Templating\PhpEngine
+ * @var $asseticHelper \Symfony\Bundle\AsseticBundle\Templating\AsseticHelper
+ * @var $assetsHelper \Symfony\Component\Templating\Helper\AssetsHelper
+ */
 
 ?>
 <!DOCTYPE HTML>
@@ -19,6 +22,18 @@
 ) as $url): ?>
 	<link rel="stylesheet" href="<?= $view->escape($url) ?>" />
 <? endforeach ?>
+
+	<? foreach ($view['assetic']->javascripts(
+		array(
+			'@AnglerCoreBundle/Resources/public/js/framework/jquery-src.js',
+			'@AnglerCoreBundle/Resources/public/js/framework/json2.js',
+		),
+		array('yui_js'),
+		array('output' => 'js/framework.js')
+	) as $url): ?>
+	<script type="text/javascript" src="<?= $view->escape($url) ?>"></script>
+	<? endforeach ?>
+
 <? if($view['slots']->has('stylesheets:base')): ?>
 <? $view['slots']->output('stylesheets:base') ?>
 <? endif ?>
@@ -29,24 +44,12 @@
 </head>
 <body>
 
-
 	<? $view['slots']->output('body') ?>
 
-	<!-- Include javascript files -->
-<? foreach ($view['assetic']->javascripts(
-	array(
-		'@AnglerCoreBundle/Resources/public/js/framework/jquery-src.js',
-		'@AnglerCoreBundle/Resources/public/js/framework/json2.js',
-	),
-	array('yui_js'),
-	array('output' => 'js/framework.js')
-) as $url
-): ?>
-	<script type="text/javascript" src="<?= $view->escape($url) ?>"></script>
-<? endforeach ?>
+<!-- Include javascript files -->
 <? if($view['slots']->has('javascripts:base')):
 $view['slots']->output('javascripts:base') ?>
 <? endif ?>
-	<!-- /Include javascript files -->
+<!-- /Include javascript files -->
 </body>
 </html>

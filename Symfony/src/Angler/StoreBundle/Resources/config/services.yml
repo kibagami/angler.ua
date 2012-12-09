@@ -1,7 +1,0 @@
-parameters:
-#    angler_store.example.class: Angler\StoreBundle\Example
-
-services:
-#    angler_store.example:
-#        class: %angler_store.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

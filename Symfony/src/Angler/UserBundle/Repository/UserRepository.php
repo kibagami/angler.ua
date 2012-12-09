@@ -18,8 +18,10 @@ use Doctrine\ORM\NoResultException;
 class UserRepository extends EntityRepository {
 
 	public function loadUserByUsername($username) {
-		$q = $this
+		$Q = $this
 			->createQueryBuilder('u')
+			->select('u, r')
+			->leftJoin('u.roles', 'r')
 			->where('u.username = :username OR u.email = :email')
 			->setParameter('username', $username)
 			->setParameter('email', $username)
@@ -28,9 +30,9 @@ class UserRepository extends EntityRepository {
 		try {
 			// The Query::getSingleResult() method throws an exception
 			// if there is no record matching the criteria.
-			$user = $q->getSingleResult();
+			$user = $Q->getSingleResult();
 		} catch (NoResultException $e) {
-			throw new UsernameNotFoundException(sprintf('Unable to find an active admin AcmeUserBundle:User object identified by "%s".', $username), null, 0, $e);
+			throw new UsernameNotFoundException(sprintf('Unable to find an active admin AnglerUserBundle:User object identified by "%s".', $username), null, 0, $e);
 		}
 
 		return $user;

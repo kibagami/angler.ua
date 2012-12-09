@@ -1,5 +1,8 @@
 <?
-/** @var $view \Symfony\Bundle\FrameworkBundle\Templating\PhpEngine */
+/**
+ * @var $view \Symfony\Bundle\FrameworkBundle\Templating\PhpEngine
+ * @var $error \Symfony\Component\Security\Core\Exception\BadCredentialsException
+ */
 ?>
 <? $view->extend('AnglerCoreBundle::base.html.php') ?>
 
@@ -14,7 +17,6 @@
 	),
 	array('yui_css'),
 	array('output' => 'backend/css/login.css')
-
 ) as $url
 ): ?>
 	<link rel="stylesheet" href="<?= $view->escape($url) ?>" />
@@ -35,23 +37,55 @@
 <? $view['slots']->stop() ?>
 
 <? $view['slots']->start('body') ?>
-<?php if ($error): ?>
-<div><?php echo $error->getMessage() ?></div>
-<?php endif; ?>
+<div id="page" class="b-page">
+	<div id="auth" class="b-auth-form b-tile">
+		<div class="b-reduce b-reduce_middle">
+			<div id="greeting">
+				<span class="b-bold upper text">Sign in to Angler.ua</span>
+			</div>
 
-<form action="<?php echo $view['router']->generate('AnglerBackendBundle_login_check') ?>" method="post">
-	<label for="username">Username:</label>
-	<input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
+			<? if ($error): ?>
+			<div><?= $error->getMessage() ?></div>
+			<? endif ?>
 
-	<label for="password">Password:</label>
-	<input type="password" id="password" name="_password" />
+			<div id="login-form">
+				<form action="<?= $view['router']->generate('AnglerBackendBundle_login_check') ?>" method="POST">
+					<dl class="b-auth-row">
+						<dt>
+							<label for="username">Username:</label>
+						</dt>
+						<dd>
+							<input class="b-auth-input b-auth-input__text" type="text" id="username" name="_username" value="<?= $view->escape($last_username) ?>"/>
+						</dd>
+					</dl>
+					<dl class="b-auth-row">
+						<dt>
+							<label for="password">Password:</label>
+						</dt>
+						<dd>
+							<input class="b-auth-input b-auth-input__password" type="password" id="password" name="_password"/>
+						</dd>
+					</dl>
 
-	<!--
-			If you want to control the URL the user is redirected to on success (more details below)
-			<input type="hidden" name="_target_path" value="/account" />
-		-->
+					<table class="wide">
+					<tr>
+						<td>
+							<div class="b-choice" id="keep-me">
+								<input type="checkbox" id="remember-me" name="_remember_me"/>
+								<label for="remember-me">Remember me:</label>
+							</div>
+						</td>
+						<td class="b-ar">
+							<button class="b-button b-button__action upper" type="submit">Login</button>
+						</td>
+					</tr>
+					</table>
 
-	<button type="submit">login</button>
-</form>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>
 <? $view['slots']->stop() ?>
 

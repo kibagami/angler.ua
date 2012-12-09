@@ -1,12 +1,12 @@
-AnglerBackendBundle_login:
+angler_backend_login:
     pattern:  /login/
     defaults: { _controller: AnglerBackendBundle:Authentication:login }
 
-AnglerBackendBundle_login_check:
+angler_backend_login_check:
     pattern:  /login_check/
 
 
-AnglerBackendBundle_homepage:
+angler_backend_homepage:
     pattern:  /
     defaults: { _controller: AnglerBackendBundle:Default:index }
 

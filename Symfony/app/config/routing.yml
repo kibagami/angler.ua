@@ -1,22 +1,27 @@
-AnglerStoreBundle:
-    resource: "@AnglerStoreBundle/Resources/config/routing.yml"
+angler_test:
+    resource: "@AnglerTestBundle/Resources/config/routing.yml"
     prefix:   /
 
-AnglerUserBundle:
-    resource: "@AnglerUserBundle/Resources/config/routing.yml"
+angler_core:
+    resource: "@AnglerCoreBundle/Resources/config/routing.yml"
     prefix:   /
 
-AnglerFrontendBundle:
+angler_frontend:
     resource: "@AnglerFrontendBundle/Resources/config/routing.yml"
     prefix:   /
 
-AnglerCheckoutBundle:
+angler_backend:
+    resource: "@AnglerBackendBundle/Resources/config/routing.yml"
+    prefix:   /backend
+
+angler_checkout:
     resource: "@AnglerCheckoutBundle/Resources/config/routing.yml"
     prefix:   /checkout
 
-AnglerBackendBundle:
-    resource: "@AnglerBackendBundle/Resources/config/routing.yml"
-    prefix:   /backend
+angler_user:
+    resource: "@AnglerUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 
 
 
