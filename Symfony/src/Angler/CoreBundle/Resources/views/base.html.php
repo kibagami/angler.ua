@@ -1,11 +1,9 @@
 <?
-
 /**
  * @var $view \Symfony\Bundle\FrameworkBundle\Templating\PhpEngine
  * @var $asseticHelper \Symfony\Bundle\AsseticBundle\Templating\AsseticHelper
  * @var $assetsHelper \Symfony\Component\Templating\Helper\AssetsHelper
  */
-
 ?>
 <!DOCTYPE HTML>
 <html>

@@ -2,13 +2,16 @@
 /**
  * @var $view \Symfony\Bundle\FrameworkBundle\Templating\PhpEngine
  * @var $error \Symfony\Component\Security\Core\Exception\BadCredentialsException
+ * @var $slotsHelper \Symfony\Component\Templating\Helper\SlotsHelper
  */
+$slotsHelper = $view['slots'];
+
+$view->extend('AnglerCoreBundle::base.html.php')
 ?>
-<? $view->extend('AnglerCoreBundle::base.html.php') ?>
 
-<? $view['slots']->set('title', "angler.ua. Login Page.")?>
+<? $slotsHelper->set('title', "angler.ua. Login Page.")?>
 
-<? $view['slots']->start('stylesheets:base') ?>
+<? $slotsHelper->start('stylesheets:base') ?>
 <? foreach ($view['assetic']->stylesheets(
 	array(
 		'@AnglerBackendBundle/Resources/public/css/login.css',
@@ -49,7 +52,7 @@
 			<? endif ?>
 
 			<div id="login-form">
-				<form action="<?= $view['router']->generate('AnglerBackendBundle_login_check') ?>" method="POST">
+				<form action="<?= $view['router']->generate('angler_backend_login_check') ?>" method="POST">
 					<dl class="b-auth-row">
 						<dt>
 							<label for="username">Username:</label>
