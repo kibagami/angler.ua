@@ -28,7 +28,7 @@ assetic:
     debug:          %kernel.debug%
     use_controller: false
     bundles:        [ AnglerBackendBundle, AnglerCoreBundle, AnglerUserBundle  ]
-    java: C:\Program Files\Java\jre7\bin\java.exe
+    java: C:\Program Files\Java\jre6\bin\java.exe
     filters:
         cssrewrite: ~
         # closure:
