@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Angler\UserBundle\AnglerUserBundle(),
             new Angler\CheckoutBundle\AnglerCheckoutBundle(),
             new Angler\TestBundle\AnglerTestBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
