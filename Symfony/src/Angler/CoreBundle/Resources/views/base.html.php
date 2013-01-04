@@ -1,7 +1,7 @@
 <?
 /**
  * @var $view \Symfony\Bundle\FrameworkBundle\Templating\PhpEngine
- * @var $asseticHelper \Symfony\Bundle\AsseticBundle\Templating\AsseticHelper
+ * @var $slotsHelper \Symfony\Component\Templating\Helper\SlotsHelper
  * @var $assetsHelper \Symfony\Component\Templating\Helper\AssetsHelper
  */
 ?>
@@ -23,8 +23,10 @@
 
 	<? foreach ($view['assetic']->javascripts(
 		array(
-			'@AnglerCoreBundle/Resources/public/js/framework/jquery-src.js',
-			'@AnglerCoreBundle/Resources/public/js/framework/json2.js',
+			'@AnglerCoreBundle/Resources/public/js/framework/jquery.js',
+			'@AnglerCoreBundle/Resources/public/js/framework/knockout-2.2.0.debug.js',
+            '@AnglerCoreBundle/Resources/public/js/framework/json2.js',
+			'@AnglerCoreBundle/Resources/public/js/framework/OO.js',
 		),
 		array('yui_js'),
 		array('output' => 'js/framework.js')

@@ -1,3 +1,7 @@
+angler_catalog:
+    resource: "@AnglerCatalogBundle/Resources/config/routing.yml"
+    prefix:   /catalog
+
 angler_test:
     resource: "@AnglerTestBundle/Resources/config/routing.yml"
     prefix:   /

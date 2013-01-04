@@ -5,6 +5,7 @@ imports:
 framework:
     #esi:             ~
     #translator:      { fallback: %locale% }
+    trusted_proxies: ~
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -27,7 +28,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ AnglerBackendBundle, AnglerCoreBundle, AnglerUserBundle  ]
+    bundles:        [ AnglerBackendBundle, AnglerCoreBundle, AnglerCatalogBundle, AnglerUserBundle  ]
     java: C:\Program Files\Java\jre6\bin\java.exe
     filters:
         cssrewrite: ~

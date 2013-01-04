@@ -1,0 +1,7 @@
+parameters:
+#    angler_catalog.example.class: Angler\CatalogBundle\Example
+
+services:
+#    angler_catalog.example:
+#        class: %angler_catalog.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

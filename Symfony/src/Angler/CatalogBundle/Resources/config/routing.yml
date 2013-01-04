@@ -1,0 +1,3 @@
+angler_catalog_homepage:
+    pattern:  /
+    defaults: { _controller: AnglerCatalogBundle:Default:index }
