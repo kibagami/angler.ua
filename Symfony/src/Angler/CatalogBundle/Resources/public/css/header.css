@@ -1,0 +1,81 @@
+.b-header {
+	position: relative;
+}
+
+.b-logo {
+	position: absolute;
+	left: 0px;
+	top: 50%;
+	margin-top: -16px;
+}
+
+.b-head-layout {
+	margin-left: 250px;
+	padding: 0.6875em 0;
+}
+
+ul.top-list li.top-list-title
+		{ color: #e8e595; padding-right: 0.35em; }
+ul.top-list li a
+		{ color: #1abf93; text-decoration: none; border-bottom: 1px dotted #1abf93; line-height: 18px; }
+ul.top-list li a:hover
+		{ color: #72f4d1; border-bottom: 1px dotted #72f4d1; }
+
+#toolbar.wide
+		{ height: 32px; background: #39414a; }
+#toolbar.widget
+		{ width: 320px; height: 32px; background: #39414a; }
+
+.b-tool-item, .b-tool-label {
+	font-size: 0.6875em;
+}
+.b-tool-item {
+	height: 1.6em;
+	line-height: 1.6em;
+	padding: 0.5em 0.8em 0.6em 0.8em;
+}
+
+.b-tool-label {
+	padding: 0.5em 0 0.6em 0;
+}
+			
+.b-tool-plate {
+	position: relative;
+}
+
+.b-switcher_dropdown {
+	padding-right: 16px;
+}
+.b-switcher em {
+	font-style: normal;
+}
+
+#settings a
+		{ /* color: #73bf00; border-color: #73bf00; */ }
+
+/* Flags */
+.lang {
+	position: relative;
+	padding-left: 22px;
+}
+.lang i.flag {
+	display: block;
+	position: absolute;
+	top: 50%;
+	margin-top: -6px;
+	left: 0px;
+	width: 18px;
+	height: 12px;
+	background: url("/bundles/anglercatalog/images/flags-sprite.png") no-repeat;
+}
+.russian i.flag
+		{ background-position: -108px; }
+.danish i.flag
+		{ background-position: -18px; }
+.svenska i.flag
+		{ background-position: -36px; }
+.ukraine i.flag
+		{ background-position: -54px; }
+.german i.flag
+		{ background-position: -90px; }
+/* /Flags */

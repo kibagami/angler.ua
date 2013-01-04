@@ -8,17 +8,30 @@
 <? $view['slots']->start('stylesheets:base') ?>
 <? foreach ($view['assetic']->stylesheets(
 	array(
-		'@AnglerBackendBundle/Resources/public/css/grid.css',
-		'@AnglerBackendBundle/Resources/public/css/ui.css',
-        '@AnglerBackendBundle/Resources/public/css/header.css',
+		'@AnglerCatalogBundle/Resources/public/css/grid.css',
+		'@AnglerCatalogBundle/Resources/public/css/layout.css',
+        '@AnglerCatalogBundle/Resources/public/css/header.css',
 	),
 	array('yui_css'),
-	array('output' => 'catalog/css/styles.css')
+	array('output' => 'catalog/css/ui.css')
 
 ) as $url
 ): ?>
 <link rel="stylesheet" href="<?= $view->escape($url) ?>" />
 <? endforeach ?>
+
+<? foreach ($view['assetic']->stylesheets(
+                array(
+                    '@AnglerCatalogBundle/Resources/public/css/controls/*.css',
+                ),
+                array('yui_css'),
+                array('output' => 'catalog/css/controls.css')
+
+            ) as $url
+): ?>
+    <link rel="stylesheet" href="<?= $view->escape($url) ?>" />
+<? endforeach ?>
+
 
 <? if($view['slots']->has('stylesheets:custom')): ?>
 <!-- Include custom stylesheets -->
