@@ -1,0 +1,13 @@
+.b-list {
+    list-style-type: none;
+}
+
+.b-list_horizontal .b-list-item {
+    float: left;
+}
+
+.b-list-item {}
+
+.b-list_horizontal .b-list-item:last-child {
+    margin-right: 0;
+}

@@ -77,7 +77,7 @@ table {
 .b-page {
 	min-height: 100%;
 	overflow: auto;
-	/* background-color: #39414a; */
+	background-color: #fbfbfb;
 }
 
 * html .b-page {
@@ -88,10 +88,15 @@ table {
 	padding-bottom: 185px;
 }
 
+.b-page-title {
+    font-family: Tahoma, Arial, Verdana, san-serif, serif;
+    font-size: 1em;
+}
+
 /* Popup */
 #popup {
 	position: absolute;
-	/*font-size: 0.6875em;*/
+	font-size: 0.6875em;
 	top: 50%;
 	right: 50%;
 	z-index: 1001;
@@ -433,9 +438,9 @@ table.auth-links .register-link {
 /* /Search */
 
 /* Footer */
-#footer {
-	margin-top: -160px;
-	height: 160px;
+.b-footer {
+	margin-top: -3em;
+	height: 3em;
 	position: relative;
 }
 /* /Footer */

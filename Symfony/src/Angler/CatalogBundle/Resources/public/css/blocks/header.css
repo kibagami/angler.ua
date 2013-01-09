@@ -1,17 +1,11 @@
 .b-header {
 	position: relative;
-}
-
-.b-logo {
-	position: absolute;
-	left: 0px;
-	top: 50%;
-	margin-top: -16px;
+    min-height: 48px;
 }
 
 .b-head-layout {
-	margin-left: 250px;
-	padding: 0.6875em 0;
+    margin-left: 250px;
+    padding: 0.6875em 0;
 }
 
 ul.top-list li.top-list-title

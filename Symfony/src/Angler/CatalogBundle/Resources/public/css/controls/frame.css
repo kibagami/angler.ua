@@ -1,0 +1,12 @@
+.b-frame {
+    padding: 0.3em;
+}
+
+.b-frame_title {
+    padding-bottom: 0.3em;
+}
+
+.b-frame_content {
+    background: white;
+    min-height: 450px;;
+}

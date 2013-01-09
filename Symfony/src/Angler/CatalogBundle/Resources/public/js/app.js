@@ -18,7 +18,6 @@ PanelViewModel.prototype.toggle = function () {
 };
 
 window.onload = function () {
-
     window.panel = new PanelViewModel();
     ko.applyBindings(panel, document.getElementById('panel'));
 };

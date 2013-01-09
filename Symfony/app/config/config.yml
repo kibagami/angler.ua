@@ -28,7 +28,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ AnglerBackendBundle, AnglerCoreBundle, AnglerCatalogBundle, AnglerUserBundle  ]
+    bundles:        [ AnglerCoreBundle, AnglerCatalogBundle ]
     java: C:\Program Files\Java\jre6\bin\java.exe
     filters:
         cssrewrite: ~
