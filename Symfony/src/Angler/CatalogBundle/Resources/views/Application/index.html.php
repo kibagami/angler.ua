@@ -25,6 +25,8 @@ $view->extend("AnglerCatalogBundle::layout.html.php");
 <? $view['slots']->start('javascripts:custom') ?>
 <? foreach ($view['assetic']->javascripts(
                 array(
+                    '@AnglerCatalogBundle/Resources/public/js/Controls/*',
+                    '@AnglerCatalogBundle/Resources/public/js/Views/*',
                     '@AnglerCatalogBundle/Resources/public/js/*',
                 ),
                 array('yui_js'),
@@ -37,24 +39,22 @@ $view->extend("AnglerCatalogBundle::layout.html.php");
 
 <div class="b-grid-layout b-grid-layout__left">
 	<div class="b-grid-column__left">
-		<div class="b-sidebar" id="menu" data-bind="foreach">
-			<a class="b-sidebar_item b-sidebar_item__current" href="#buttons">
-				<span>Buttons</span>
+		<div class="b-sidebar" id="menu">
+			<!-- ko foreach: tabs -->
+			<a class="b-sidebar_item" data-bind="attr: { href: $data.id }, event: { click: $parent.select }">
+				<span data-bind="text: $data.title"></span>
 			</a>
-			<a class="b-sidebar_item" class="b-sidebar_item" href="#dialogs"><span>Dialogs</span></a>
-			<a class="b-sidebar_item" href="#dates"><span>Date widgets</span></a>
-			<a class="b-sidebar_item" href="#tabs"><span>Tab</span></a>
-			<a class="b-sidebar_item" href="#lists"><span>Lists</span></a>
+			<!-- /ko -->
 		</div>
 	</div>
 	<div class="b-grid-layout__wrapper">
-		<div class="b-grid-column__center b-frame b-block__filled">
+		<div class="b-grid-column__center b-frame b-block__filled" id="frame-data">
+			<!-- ko with: currentTab -->
 			<div class="b-frame_title">
-				<span>Buttons</span>
+				<span data-bind="text: $data.title"></span>
 			</div>
-			<div class="b-frame_content b-reduce_small">
-				Content
-			</div>
+			<div class="b-frame_content b-reduce_small" data-bind="text: $data.id"></div>
+			<!-- /ko -->
 		</div>
 	</div>
 </div>
