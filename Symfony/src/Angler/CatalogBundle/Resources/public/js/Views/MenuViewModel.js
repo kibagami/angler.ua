@@ -10,22 +10,27 @@ function MenuViewModel() {
 	this.tabs = [
 		{
 			id: '#buttons',
+			view: "ButtonsView",
 			title: "Buttons"
 		},
 		{
 			id: '#dialogs',
+			view: "DialogsView",
 			title: "Dialogs"
 		},
 		{
 			id: '#dates',
+			view: "DatesView",
 			title: "Date widgets"
 		},
 		{
 			id: '#tabs',
+			view: "TabsView",
 			title: "Tab manager"
 		},
 		{
 			id: '#lists',
+			view: "ListsView",
 			title: "List manager"
 		}
 	];
@@ -43,7 +48,4 @@ function MenuViewModel() {
 	};
 
 	mi.currentTab(mi.tabs[0]);
-
-	console.log(mi.currentTab());
-
 }

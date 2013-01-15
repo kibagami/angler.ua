@@ -53,7 +53,7 @@ $view->extend("AnglerCatalogBundle::layout.html.php");
 			<div class="b-frame_title">
 				<span data-bind="text: $data.title"></span>
 			</div>
-			<div class="b-frame_content b-reduce_small" data-bind="text: $data.id"></div>
+			<div class="b-frame_content b-reduce_small" data-bind="view: $data.view"></div>
 			<!-- /ko -->
 		</div>
 	</div>

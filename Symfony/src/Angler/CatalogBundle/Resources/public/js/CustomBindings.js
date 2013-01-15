@@ -29,7 +29,7 @@ var ViewKnockoutBindingHandler = (function () {
 			}
 		}
 	};
-	ViewKnockoutBindingHandler.initViewBinding = function initViewBinding(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+	ViewKnockoutBindingHandler.initViewBinding = function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
 		var $e = $(element);
 		if($e.data("view-create")) {
 			var value = ko.utils.unwrapObservable(valueAccessor()) || "";
@@ -56,12 +56,12 @@ var ViewKnockoutBindingHandler = (function () {
 			}
 		}
 	};
-	ViewKnockoutBindingHandler.getDataValueAccessor = function getDataValueAccessor(valueAccessor) {
+	ViewKnockoutBindingHandler.getDataValueAccessor = function(valueAccessor) {
 		return function () {
 			return valueAccessor().data;
 		}
 	};
-	ViewKnockoutBindingHandler.elementDisposalCallback = function elementDisposalCallback(element) {
+	ViewKnockoutBindingHandler.elementDisposalCallback = function(element) {
 		$(element).removeData();
 	};
 	return ViewKnockoutBindingHandler;
