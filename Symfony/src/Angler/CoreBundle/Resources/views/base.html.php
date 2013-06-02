@@ -26,6 +26,7 @@
 			'@AnglerCoreBundle/Resources/public/js/framework/jquery.js',
 			'@AnglerCoreBundle/Resources/public/js/framework/knockout-2.2.0.debug.js',
             '@AnglerCoreBundle/Resources/public/js/framework/json2.js',
+			'@AnglerCoreBundle/Resources/public/js/framework/OO.js',
 		),
 		array('yui_js'),
 		array('output' => 'js/framework.js')

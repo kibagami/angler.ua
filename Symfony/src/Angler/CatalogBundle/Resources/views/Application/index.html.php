@@ -26,7 +26,7 @@ $view->extend("AnglerCatalogBundle::layout.html.php");
 <? foreach ($view['assetic']->javascripts(
                 array(
 //                    '@AnglerCatalogBundle/Resources/public/js/Controls/*',
-//                    '@AnglerCatalogBundle/Resources/public/js/Views/*',
+                    '@AnglerCatalogBundle/Resources/public/js/Views/*',
                     '@AnglerCatalogBundle/Resources/public/js/*',
                 ),
                 array('yui_js'),
