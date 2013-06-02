@@ -19,12 +19,10 @@
 
 namespace Doctrine\ORM\Internal\Hydration;
 
-use \PDO,
-    Doctrine\DBAL\Types\Type,
-    Doctrine\ORM\Mapping\ClassMetadata,
-    Doctrine\ORM\Event\LifecycleEventArgs,
-    Doctrine\ORM\Events,
-    Doctrine\ORM\Query;
+use PDO;
+use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Query;
 
 class SimpleObjectHydrator extends AbstractHydrator
 {
@@ -178,10 +176,13 @@ class SimpleObjectHydrator extends AbstractHydrator
                 // One solution is to load the association, but it might require extra efforts.
                 return array('name' => $column);
 
-            default:
+            case (isset($this->_rsm->metaMappings[$column])):
                 return array(
                     'name' => $this->_rsm->metaMappings[$column]
                 );
+
+            default:
+                return null;
         }
     }
 }

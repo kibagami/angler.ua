@@ -106,19 +106,29 @@ class AsseticExtensionTest extends \PHPUnit_Framework_TestCase
             array('compass'),
             array('cssembed', array('jar' => '/path/to/cssembed.jar')),
             array('cssimport'),
+            array('cssmin'),
             array('cssrewrite'),
+            array('dart'),
+            array('gss'),
+            array('handlebars'),
             array('jpegoptim'),
             array('jpegtran'),
+            array('jsmin'),
+            array('jsminplus'),
             array('less'),
             array('lessphp'),
-            array('scssphp'),
             array('optipng'),
             array('packager'),
+            array('phpcssembed'),
             array('pngout'),
             array('sass'),
             array('scss'),
+            array('scssphp', array('compass' => true)),
             array('sprockets', array('include_dirs' => array('foo'))),
             array('stylus'),
+            array('uglifycss'),
+            array('uglifyjs'),
+            array('uglifyjs2'),
             array('yui_css', array('jar' => '/path/to/yuicompressor.jar')),
             array('yui_js', array('jar' => '/path/to/yuicompressor.jar')),
         );
@@ -212,5 +222,18 @@ class AsseticExtensionTest extends \PHPUnit_Framework_TestCase
         $container->set('kernel', $this->kernel);
 
         return $container;
+    }
+
+    public function testCompassCanBeEnabled()
+    {
+        $extension = new AsseticExtension();
+        $extension->load(array(array(
+            'filters' => array(
+                'scssphp' => array('compass' => true),
+            ),
+        )), $this->container);
+
+        $this->assertTrue($this->container->get('assetic.filter.scssphp')->isCompassEnabled());
+        //$this->getDumpedContainer();
     }
 }

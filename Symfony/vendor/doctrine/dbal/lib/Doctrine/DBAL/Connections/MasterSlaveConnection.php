@@ -86,7 +86,7 @@ class MasterSlaveConnection extends Connection
     /**
      * Master and slave connection (one of the randomly picked slaves)
      *
-     * @var Doctrine\DBAL\Driver\Connection[]
+     * @var \Doctrine\DBAL\Driver\Connection[]
      */
     protected $connections = array('master' => null, 'slave' => null);
 
@@ -261,10 +261,10 @@ class MasterSlaveConnection extends Connection
     /**
      * {@inheritDoc}
      */
-    public function delete($tableName, array $identifier)
+    public function delete($tableName, array $identifier, array $types = array())
     {
         $this->connect('master');
-        return parent::delete($tableName, $identifier);
+        return parent::delete($tableName, $identifier, $types);
     }
 
     /**

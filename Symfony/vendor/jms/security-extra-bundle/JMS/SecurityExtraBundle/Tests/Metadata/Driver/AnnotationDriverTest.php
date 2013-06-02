@@ -37,6 +37,31 @@ class AnnotationDriverTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array(new Expression("hasRole('bar')")), $metadata->methodMetadata['bazAction']->roles);
     }
 
+    public function testLoadMetadataWithClassSecureParam()
+    {
+        $driver = new AnnotationDriver(new AnnotationReader());
+
+        $metadata = $driver->loadMetadataForClass(new \ReflectionClass('JMS\SecurityExtraBundle\Tests\Mapping\Driver\FooSecureService'));
+        $this->assertTrue(isset($metadata->methodMetadata['foo']));
+        $method = $metadata->methodMetadata['foo'];
+        $this->assertEquals(array(), $method->roles);
+        $this->assertEquals(array(), $method->returnPermissions);
+        $this->assertEquals(array(0 => array('VIEW'), 1 => array('EDIT')), $method->paramPermissions);
+
+        $this->assertTrue(isset($metadata->methodMetadata['baz']));
+        $method = $metadata->methodMetadata['baz'];
+        $this->assertEquals(array(), $method->roles);
+        $this->assertEquals(array(), $method->returnPermissions);
+        $this->assertEquals(array(0 => array('VIEW')), $method->paramPermissions);
+
+        $metadata = $driver->loadMetadataForClass(new \ReflectionClass('JMS\SecurityExtraBundle\Tests\Mapping\Driver\FooMultipleSecureService'));
+        $this->assertTrue(isset($metadata->methodMetadata['foo']));
+        $method = $metadata->methodMetadata['foo'];
+        $this->assertEquals(array(), $method->roles);
+        $this->assertEquals(array(), $method->returnPermissions);
+        $this->assertEquals(array(0 => array('VIEW'), 1 => array('EDIT')), $method->paramPermissions);
+    }
+
     public function testLoadMetadataFromClass()
     {
         $driver = new AnnotationDriver(new AnnotationReader());
@@ -64,7 +89,7 @@ class AnnotationDriverTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($metadata->methodMetadata['shortNotation']));
         $method = $metadata->methodMetadata['shortNotation'];
         $this->assertEquals(array('ROLE_FOO', 'ROLE_BAR'), $method->roles);
-    }
+    }        
 
     public function testLoadMetadataFromClassDoesNotProcessMethodsForWhichNoSecurityMetadataExists()
     {
@@ -73,5 +98,17 @@ class AnnotationDriverTest extends \PHPUnit_Framework_TestCase
         $metadata = $driver->loadMetadataForClass(new \ReflectionClass('JMS\SecurityExtraBundle\Tests\Fixtures\MainService'));
         $this->assertTrue(class_exists('JMS\SecurityExtraBundle\Tests\Fixtures\Annotation\NonSecurityAnnotation', false));
         $this->assertFalse(isset($metadata->methodMetadata['foo']));
+    }
+    
+    public function testLoadMetadataFromClassWithRolesAndPermissionsArrayNotation()
+    {
+        $driver = new AnnotationDriver(new AnnotationReader());
+
+        $metadata = $driver->loadMetadataForClass(new \ReflectionClass('JMS\SecurityExtraBundle\Tests\Mapping\Driver\FooService'));
+        $this->assertTrue(isset($metadata->methodMetadata['bar']));
+        $method = $metadata->methodMetadata['bar'];
+        $this->assertEquals(array('ROLE_FOO', 'ROLE_BAR'), $method->roles);        
+        $this->assertEquals(array(0 => array('OWNER')), $method->paramPermissions);        
+        $this->assertEquals(array('MASTER'), $method->returnPermissions);
     }
 }

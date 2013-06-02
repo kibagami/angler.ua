@@ -90,6 +90,14 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
     }
 
     /**
+     * @return Table
+     */
+    public function getLocalTable()
+    {
+        return $this->_localTable;
+    }
+
+    /**
      * @return array
      */
     public function getLocalColumns()
@@ -108,6 +116,17 @@ class ForeignKeyConstraint extends AbstractAsset implements Constraint
     public function getForeignTableName()
     {
         return $this->_foreignTableName;
+    }
+
+    /**
+     * Return the non-schema qualified foreign table name.
+     *
+     * @return string
+     */
+    public function getUnqualifiedForeignTableName()
+    {
+        $parts = explode(".", $this->_foreignTableName);
+        return strtolower(end($parts));
     }
 
     /**

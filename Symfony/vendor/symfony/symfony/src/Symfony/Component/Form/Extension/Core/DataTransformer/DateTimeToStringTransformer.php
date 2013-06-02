@@ -42,7 +42,7 @@ class DateTimeToStringTransformer extends BaseDateTimeTransformer
     /**
      * Whether to parse by appending a pipe "|" to the parse format.
      *
-     * This only works as of PHP 5.3.8.
+     * This only works as of PHP 5.3.7.
      *
      * @var Boolean
      */
@@ -66,9 +66,10 @@ class DateTimeToStringTransformer extends BaseDateTimeTransformer
 
         $this->generateFormat = $this->parseFormat = $format;
 
-        // The pipe in the parser pattern only works as of PHP 5.3.8
+        // The pipe in the parser pattern only works as of PHP 5.3.7
+        // See http://bugs.php.net/54316
         $this->parseUsingPipe = null === $parseUsingPipe
-            ? version_compare(phpversion(), '5.3.8', '>=')
+            ? version_compare(phpversion(), '5.3.7', '>=')
             : $parseUsingPipe;
 
         // See http://php.net/manual/en/datetime.createfromformat.php
@@ -151,7 +152,7 @@ class DateTimeToStringTransformer extends BaseDateTimeTransformer
                 );
             }
 
-            // On PHP versions < 5.3.8 we need to emulate the pipe operator
+            // On PHP versions < 5.3.7 we need to emulate the pipe operator
             // and reset parts not given in the format to their equivalent
             // of the UNIX base timestamp.
             if (!$this->parseUsingPipe) {
@@ -160,14 +161,14 @@ class DateTimeToStringTransformer extends BaseDateTimeTransformer
                 // Check which of the date parts are present in the pattern
                 preg_match(
                     '/(' .
-                    '(?<day>[djDl])|' .
-                    '(?<month>[FMmn])|' .
-                    '(?<year>[Yy])|' .
-                    '(?<hour>[ghGH])|' .
-                    '(?<minute>i)|' .
-                    '(?<second>s)|' .
-                    '(?<dayofyear>z)|' .
-                    '(?<timestamp>U)|' .
+                    '(?P<day>[djDl])|' .
+                    '(?P<month>[FMmn])|' .
+                    '(?P<year>[Yy])|' .
+                    '(?P<hour>[ghGH])|' .
+                    '(?P<minute>i)|' .
+                    '(?P<second>s)|' .
+                    '(?P<dayofyear>z)|' .
+                    '(?P<timestamp>U)|' .
                     '[^djDlFMmnYyghGHiszU]' .
                     ')*/',
                     $this->parseFormat,

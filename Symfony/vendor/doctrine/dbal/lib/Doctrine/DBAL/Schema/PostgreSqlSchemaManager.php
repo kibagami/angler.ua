@@ -58,10 +58,12 @@ class PostgreSqlSchemaManager extends AbstractSchemaManager
     {
         $params = $this->_conn->getParams();
         $schema = explode(",", $this->_conn->fetchColumn('SHOW search_path'));
+
         if (isset($params['user'])) {
             $schema = str_replace('"$user"', $params['user'], $schema);
         }
-        return $schema;
+
+        return array_map('trim', $schema);
     }
 
     /**
@@ -134,6 +136,8 @@ class PostgreSqlSchemaManager extends AbstractSchemaManager
 
         parent::dropDatabase($database);
 
+        $this->_conn->close();
+
         $this->_platform = $tmpPlatform;
         $this->_conn = $tmpConn;
     }
@@ -149,6 +153,8 @@ class PostgreSqlSchemaManager extends AbstractSchemaManager
         $this->_platform = $this->_conn->getDatabasePlatform();
 
         parent::createDatabase($database);
+
+        $this->_conn->close();
 
         $this->_platform = $tmpPlatform;
         $this->_conn = $tmpConn;
@@ -233,7 +239,7 @@ class PostgreSqlSchemaManager extends AbstractSchemaManager
             $sequenceName = $sequence['relname'];
         }
 
-        $data = $this->_conn->fetchAll('SELECT min_value, increment_by FROM ' . $sequenceName);
+        $data = $this->_conn->fetchAll('SELECT min_value, increment_by FROM ' . $this->_platform->quoteIdentifier($sequenceName));
         return new Sequence($sequenceName, $data[0]['increment_by'], $data[0]['min_value']);
     }
 
@@ -254,6 +260,10 @@ class PostgreSqlSchemaManager extends AbstractSchemaManager
             $tableColumn['sequence'] = $matches[1];
             $tableColumn['default'] = null;
             $autoincrement = true;
+        }
+
+        if (preg_match("/^'(.*)'::.*$/", $tableColumn['default'], $matches)) {
+            $tableColumn['default'] = $matches[1];
         }
 
         if (stripos($tableColumn['default'], 'NULL') === 0) {
