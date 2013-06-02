@@ -2,7 +2,7 @@
 namespace Angler\UserBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use \Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -20,7 +20,7 @@ class UserData extends AbstractFixture implements FixtureInterface, ContainerAwa
 	/**
 	 * Load data fixtures with the passed EntityManager
 	 *
-	 * @param Doctrine\Common\Persistence\ObjectManager $manager
+	 * @param \Doctrine\Common\Persistence\ObjectManager $manager
 	 */
 	function load(ObjectManager $manager) {
 		$adminUser = new User();

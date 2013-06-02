@@ -19,13 +19,14 @@ class AppKernel extends Kernel
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+			new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+			// My bundles
             new Angler\BackendBundle\AnglerBackendBundle(),
             new Angler\CoreBundle\AnglerCoreBundle(),
             new Angler\FrontendBundle\AnglerFrontendBundle(),
             new Angler\UserBundle\AnglerUserBundle(),
             new Angler\CheckoutBundle\AnglerCheckoutBundle(),
             new Angler\TestBundle\AnglerTestBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Angler\CatalogBundle\AnglerCatalogBundle(),
         );
 

@@ -3,6 +3,7 @@ namespace Angler\BackendBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class UserType extends AbstractType {
 
@@ -15,7 +16,7 @@ class UserType extends AbstractType {
 		return "user";
 	}
 
-	public function buildForm(FormBuilder $builder, array $options) {
+	public function buildForm(FormBuilderInterface $builder, array $options) {
 		$builder
 			->add('username', 'text')
 			->add('password', 'repeated')
