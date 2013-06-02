@@ -13,7 +13,7 @@
 		'@AnglerBackendBundle/Resources/public/css/product.css',
 	),
 	array('yui_css'),
-	array('output' => 'css/backend/homepage.css')
+	array('output' => 'backend/css/homepage.css')
 
 ) as $url
 ): ?>

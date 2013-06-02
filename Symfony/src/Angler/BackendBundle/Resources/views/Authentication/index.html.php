@@ -14,11 +14,10 @@ $view->extend('AnglerCoreBundle::base.html.php')
 <? $slotsHelper->start('stylesheets:base') ?>
 <? foreach ($view['assetic']->stylesheets(
 	array(
-		'@AnglerBackendBundle/Resources/public/css/grid.css',
-		'@AnglerBackendBundle/Resources/public/css/ui.css',
+		'@AnglerBackendBundle/Resources/public/css/login.css',
 	),
 	array('yui_css'),
-	array('output' => 'catalog/css/styles.css')
+	array('output' => 'css/login.css')
 ) as $url
 ): ?>
 	<link rel="stylesheet" href="<?= $view->escape($url) ?>" />
@@ -31,7 +30,7 @@ $view->extend('AnglerCoreBundle::base.html.php')
 		'@AnglerCatalogBundle/Resources/public/js/app.js',
 	),
 	array('yui_js'),
-	array('output' => 'backend/js/login.js')
+	array('output' => 'js/login.js')
 ) as $url
 ): ?>
 	<script type="text/javascript" src="<?= $view->escape($url) ?>"></script>

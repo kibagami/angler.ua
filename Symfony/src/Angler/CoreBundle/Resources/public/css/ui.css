@@ -125,7 +125,7 @@ table {
 }
 
 .icon-close {
-	background: url('../images/icon-dialog-close.png') no-repeat;
+	background: url('../../../../BackendBundle/Resources/public/images/icon-dialog-close.png') no-repeat;
 }
 
 /* /Popup */

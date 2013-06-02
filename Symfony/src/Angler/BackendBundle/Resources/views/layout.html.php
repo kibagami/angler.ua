@@ -6,23 +6,11 @@
 <? $view->extend('AnglerCoreBundle::base.html.php') ?>
 
 <? $view['slots']->start('stylesheets:base') ?>
-<? foreach ($view['assetic']->stylesheets(
-	array(
-		'@AnglerBackendBundle/Resources/public/css/grid.css',
-		'@AnglerBackendBundle/Resources/public/css/ui.css',
-	),
-	array('yui_css'),
-	array('output' => 'css/backend/styles.css')
 
-) as $url
-): ?>
-<link rel="stylesheet" href="<?= $view->escape($url) ?>" />
-<? endforeach ?>
-<!-- Include custom stylesheets -->
 <? if($view['slots']->has('stylesheets:custom')): ?>
 <? $view['slots']->output('stylesheets:custom') ?>
-<!-- /Include custom stylesheets -->
 <? endif ?>
+
 <? $view['slots']->stop() ?>
 
 <!-- Include javascript files -->

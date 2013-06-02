@@ -9,19 +9,6 @@ $slotsHelper = $view['slots'];
 ?>
 
 <? $slotsHelper->start('stylesheets:base') ?>
-<? foreach ($view['assetic']->stylesheets(
-	array(
-		'@AnglerCatalogBundle/Resources/public/css/grid.css',
-		'@AnglerCatalogBundle/Resources/public/css/ui.css',
-		'@AnglerCatalogBundle/Resources/public/css/layout.css',
-	),
-	array('yui_css'),
-	array('output' => 'catalog/css/ui.css')
-
-) as $url
-): ?>
-<link rel="stylesheet" href="<?= $view->escape($url) ?>" />
-<? endforeach ?>
 
 <? foreach ($view['assetic']->stylesheets(
                 array(
