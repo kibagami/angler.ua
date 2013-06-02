@@ -5,5 +5,6 @@ Symfony/web/css/
 Symfony/web/js/
 Symfony/app/bootstrap*
 Symfony/app/cache/*
+Symfony/app/config/parameters.yml
 Symfony/app/logs/*
 .idea/
